@@ -30,6 +30,11 @@
   100% { transform: rotate(360deg); }
 }
 </style>
+    <script type=text/javascript>
+    	function getPath(){
+    		return "{{url_for('static', filename='all_images')}}/";
+    	}
+	</script>
     <script type=text/javascript src="{{url_for('static', filename='image_list.js')}}"></script>
 </head>
 

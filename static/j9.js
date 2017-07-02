@@ -22,7 +22,7 @@
 
     var max_x, max_y, min_x, min_y, mid_x, mid_y;
     
-    var githubPath = "https://raw.githubusercontent.com/raghavmittal101/jay_project/master/all_images/";
+    var githubPath = getPath();
     // var githubPath   = "all_images/"
     var first_img = document.createElement
     var first_img = document.createElement("img");
