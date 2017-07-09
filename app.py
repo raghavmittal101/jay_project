@@ -57,4 +57,4 @@ if __name__ == '__main__':
 	If debug mode is on then errors(if any) will be shown while 
 	browsing the page.
 	"""
-	app.run(debug=True)
+	app.run(host='0.0.0.0')
