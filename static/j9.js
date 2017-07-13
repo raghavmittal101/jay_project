@@ -38,10 +38,11 @@ function Save() {
     return;
 }
 
-function Previous() {
-    document.getElementById('next-btn').disabled = true;
+function Previous(){
+	if(count == 0){return null;}
+	else count = count - 1;
+    document.getElementById('prev-btn').disabled = true;
     document.getElementById('loader').style.display = 'inline-block';
-    count = count - 1;
     var img = new Image();
     img.src = image_path + img_array[count]
     img.onload = function(){
@@ -49,14 +50,14 @@ function Previous() {
         cxt_1.drawImage(img, 0, 0);
         document.getElementById("FileName").innerHTML = img_array[count];
         document.getElementById('loader').style.display = 'none';
-        document.getElementById('next-btn').disabled = false;
+        document.getElementById('prev-btn').disabled = false;
     };
 }
 
 function Next() {
+	count = count + 1;
     document.getElementById('next-btn').disabled = true;
     document.getElementById('loader').style.display = 'inline-block';
-    count = count + 1;
     var img = new Image();
     img.src = image_path + img_array[count]
     img.onload = function(){
