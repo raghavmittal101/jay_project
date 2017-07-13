@@ -7,7 +7,7 @@
             margin: 0px;
             padding: 0px;
         }
-    
+
 .loader {
 	border: 5px solid rgba(0, 0, 0, 0);
 	border-radius: 50%;
@@ -44,19 +44,17 @@
         <button onclick="Previous()" id="prev-btn"> Previous </button>
         <button onclick="ScaleUp()"> + </button>
         <button onclick="ScaleDown()"> - </button>
-        <button onclick="Hide()"> Hide </button>
-        <button onclick="Show()"> Show </button>
         <button onclick="Save()" id="save-btn"> Save </button>
         <b id="FileName">drishtiGS_001</b>
         <div class="loader" id="loader" style="display: none"></div>
     </div>
-    
-    <div id = "main">
-        <canvas class = "myCanvas_1" id="myCanvas_1" width="2500" height="2000" style="position: absolute; left: 0; top: 30px; z-index: 0;"> Your browser does not support the HTML5 canvas tag. </canvas>
 
-        <canvas class="myCanvas0" id="myCanvas0" width="2500" height="2000" style="position: absolute; left: 0; top: 30px; z-index: 1;"> Your browser does not support the HTML5 canvas tag. </canvas>
+    <div id = "main">
+        <canvas class = "myCanvas_1" id="myCanvas_1" width="2500" height="2000" style="position: absolute; left: 0; top: 30px; z-index: 1;"> Your browser does not support the HTML5 canvas tag. </canvas>
+
+        <canvas class="myCanvas0" id="myCanvas0" width="2500" height="2000" style="position: absolute; left: 0; top: 30px; z-index: 0;"> Your browser does not support the HTML5 canvas tag. </canvas>
     </div>
-    
+
 	<script type=text/javascript src="{{url_for('static', filename='j9.js')}}"></script>
 </body>
 
