@@ -22,15 +22,13 @@
 
     var max_x, max_y, min_x, min_y, mid_x, mid_y;
     
-    var githubPath = getPath();
-    // var githubPath   = "all_images/"
+    var image_path = getPath();
     var first_img = document.createElement
     var first_img = document.createElement("img");
-    first_img.src = githubPath + img_array[0];
+    first_img.src = image_path + img_array[0];
 
     function Save() {
         // TAKE THIS JSON AND STORE
-        // console.log(point_list)
         var json_obj = {"id": img_array[count], "list": point_list};
         document.getElementById('save-btn').disabled = true;
         document.getElementById('save-btn').innerText = "Saving...";
@@ -49,7 +47,7 @@
         count = count - 1;
         // document.getElementsByClassName("loader").Hide = false;
         
-        img.src = githubPath + img_array[count]
+        img.src = image_path + img_array[count]
         img.addEventListener('onload', function(e) {
             // document.getElementsByClassName("loader").Hide = true;
             
@@ -67,7 +65,7 @@
         count = count + 1;
         // Appending github repo path to each image id to fetch it from online repo
         var img = new Image();
-        img.src = githubPath + img_array[count]
+        img.src = image_path + img_array[count]
         img.onload = function(){
             cxt_1.clearRect(0, 0, canvas0.width, canvas0.height);
             cxt_1.drawImage(img, 0, 0);
@@ -217,7 +215,6 @@
     }
 
     function myDown(e) {
-        // console.log('inmydown');  
         var mx = parseInt(e.pageX - offsetX);
         var my = parseInt(e.pageY - offsetY);
         dragok = false;
@@ -232,8 +229,7 @@
                 if (dx * dx + dy * dy < 25) {
                     dragok = true;
                     point_list[i]['drag'] = true;
-                    //  console.log(mx);
-                    //  console.log(sx);
+
                 }
             }
         }
