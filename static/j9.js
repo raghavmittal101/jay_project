@@ -1,4 +1,3 @@
-
 var canvas0 = document.getElementById('myCanvas0');
 var cxt = canvas0.getContext('2d');
 
