@@ -30,13 +30,16 @@ def parseJSON(json_obj):
 	The output JSON object must look like this
 	{
 		"id" : ' ',
-		"list" : [..., ]
+		"user_info" : [..., ..., ]
+		"list" : [{'x':..., 'y':..., }, {'x': ..., 'y':..., }, ...]
 	}
 	"""
 	a = [json_obj['id']]
+	for j in json_obj['user_info']:
+		a.append[j]
 	for i in json_obj['list']:
-		for j in i:
-			a.append(i[j])
+		a.append[i]['x']
+		a.append[i]['y']
 	return a
 
 @app.route('/')

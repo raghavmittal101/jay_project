@@ -45,7 +45,7 @@ function getDetails(){
 function Save() {
     // TAKE THIS JSON AND STORE
     var list = [];
-    var json_obj = {"id": img_array[count], "list": list.concat(userDetails, point_list_1, point_list_2)};
+    var json_obj = {"id": img_array[count], "user_info": userDetails, "list": list.concat(point_list_1, point_list_2)};
     document.getElementById('save-btn').disabled = true;
     document.getElementById('save-btn').innerText = "Saving...";
     send(json_obj);
