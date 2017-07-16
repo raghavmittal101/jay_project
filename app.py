@@ -36,10 +36,10 @@ def parseJSON(json_obj):
 	"""
 	a = [json_obj['id']]
 	for j in json_obj['user_info']:
-		a.append[j]
+		a.append(j)
 	for i in json_obj['list']:
-		a.append[i]['x']
-		a.append[i]['y']
+		a.append(i['x'])
+		a.append(i['y'])
 	return a
 
 @app.route('/')
