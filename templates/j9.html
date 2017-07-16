@@ -8,7 +8,7 @@
             padding: 0px;
         }
 
-.loader {
+/*.loader {
 	border: 5px solid rgba(0, 0, 0, 0);
 	border-radius: 50%;
 	border-top: 5px solid white;
@@ -28,7 +28,7 @@
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
-}
+}*/
 </style>
     <script type=text/javascript>
     	function getPath(){
@@ -39,7 +39,7 @@
 </head>
 
 <body>
-    <div id="button_container" style="position: fixed;z-index: 100;background: rgba(0, 0, 0, 0.5);color:white;">
+    <div id="button_container" style="position: fixed;z-index: 3;background: rgba(0, 0, 0, 0.5);color:white; width:100%;">
         <button onclick="Next()" id="next-btn"> Next </button>
         <button onclick="Previous()" id="prev-btn"> Previous </button>
         <button onclick="ScaleUp()"> + </button>
@@ -47,7 +47,7 @@
         <button onclick="Save()" id="save-btn"> Save </button>
         <b id="FileName">drishtiGS_001</b>
         <span style="float:right;"><b id="ImageCount"></b>/<b>{{ total_img }}</b></span>
-        <div class="loader" id="loader" style="display: none"></div>
+        <!-- <div class="loader" id="loader" style="display: none"></div> -->
 
     </div>
     <div id = "main">
@@ -57,6 +57,7 @@
     </div>
 
 	<script type=text/javascript src="{{url_for('static', filename='j9.js')}}"></script>
+  
 </body>
 
 </html>

@@ -44,7 +44,8 @@ function Previous(){
 	if(count == 0){return null;}
 	else count = count - 1;
     document.getElementById('prev-btn').disabled = true;
-    document.getElementById('loader').style.display = 'inline-block';
+    document.getElementById('prev-btn').innerText = 'Loading';
+    // document.getElementById('loader').style.display = 'inline-block';
     var img = new Image();
     img.src = image_path + img_array[count]
     img.onload = function(){
@@ -52,7 +53,8 @@ function Previous(){
         cxt0.drawImage(img, 0, 0);
         document.getElementById("FileName").innerHTML = img_array[count];
         document.getElementById("ImageCount").innerHTML = count+1;
-        document.getElementById('loader').style.display = 'none';
+        // document.getElementById('loader').style.display = 'none';
+        document.getElementById('prev-btn').innerText = 'Previous';
         document.getElementById('prev-btn').disabled = false;
     };
 }
@@ -60,7 +62,8 @@ function Previous(){
 function Next() {
 	count = count + 1;
     document.getElementById('next-btn').disabled = true;
-    document.getElementById('loader').style.display = 'inline-block';
+    document.getElementById('next-btn').innerText = 'Loading';
+    // document.getElementById('loader').style.display = 'inline-block';
     var img = new Image();
     img.src = image_path + img_array[count]
     img.onload = function(){
@@ -68,7 +71,8 @@ function Next() {
         cxt0.drawImage(img, 0, 0);
         document.getElementById("FileName").innerHTML = img_array[count];
         document.getElementById("ImageCount").innerHTML = count+1;
-        document.getElementById('loader').style.display = 'none';
+        // document.getElementById('loader').style.display = 'none';
+        document.getElementById('next-btn').innerText = 'Next';
         document.getElementById('next-btn').disabled = false;
     };
 }
