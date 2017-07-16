@@ -10,8 +10,19 @@ import sheets_api as sa
 # which is required to talk between Javascript and backend API
 from flask_cors import CORS, cross_origin
 
+# for interaction with filesystem. used in countImages() function
+import os
+
 app = Flask(__name__)
 CORS(app)
+
+def countImages():
+	"""
+	function to counter number of images inside static/all_images folder
+	"""
+	ls = os.listdir('static/all_images/')
+	count = len(ls)
+	return count
 
 def parseJSON(json_obj):
 	"""
@@ -33,7 +44,7 @@ def index():
 	"""
 	Function to render the index page, that is j9.html.
 	"""
-	return (render_template('j9.html'))
+	return (render_template('j9.html', total_img = countImages()))
 
 @app.route('/api/sheet/read/', methods=['GET'])
 def getSheet():
@@ -54,7 +65,7 @@ def writeSheet():
 
 if __name__ == '__main__':
 	"""
-	If debug mode is on then errors(if any) will be shown while 
+	If debug mode is on then errors(if any) will be shown while
 	browsing the page.
 	"""
 	app.run(host='0.0.0.0')

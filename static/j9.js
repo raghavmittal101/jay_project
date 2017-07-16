@@ -57,6 +57,7 @@ function Previous(){
         cxt0.clearRect(0, 0, canvas0.width, canvas0.height);
         cxt0.drawImage(img, 0, 0);
         document.getElementById("FileName").innerHTML = img_array[count];
+        document.getElementById("ImageCount").innerHTML = count+1;
         document.getElementById('loader').style.display = 'none';
         document.getElementById('prev-btn').disabled = false;
     };
@@ -72,6 +73,7 @@ function Next() {
         cxt0.clearRect(0, 0, canvas0.width, canvas0.height);
         cxt0.drawImage(img, 0, 0);
         document.getElementById("FileName").innerHTML = img_array[count];
+        document.getElementById("ImageCount").innerHTML = count+1;
         document.getElementById('loader').style.display = 'none';
         document.getElementById('next-btn').disabled = false;
     };
@@ -388,6 +390,7 @@ function init() {
 
 window.onload = function() {
     document.getElementById("FileName").innerHTML = "drishtiGS_001";
+    document.getElementById("ImageCount").innerHTML = count+1;
     cxt0.drawImage(first_img, 0, 0);
 }
 
