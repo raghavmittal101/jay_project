@@ -27,12 +27,6 @@ var startY;
 var BB = canvas0.getBoundingClientRect();
 var offsetX = BB.left;
 var offsetY = BB.top;
-//
-// var point_show = true;
-//
-// var count = 0;
-//
-// var max_x, max_y, min_x, min_y, mid_x, mid_y;
 
 function Save() {
     // TAKE THIS JSON AND STORE
@@ -119,29 +113,6 @@ function ScaleUp()   {
  }
 }
 
-// function draw_cent() {
-//     max_x = point_list[0]['x'];
-//     max_y = point_list[0]['y'];
-//     min_x = point_list[0]['x'];
-//     min_y = point_list[0]['y'];
-//     for (var i = 0; i < point_list.length; i++) {
-//         if (point_list[i]['x'] > max_x) {
-//             max_x = point_list[i]['x'];
-//         }
-//         if (point_list[i]['x'] < min_x) {
-//             min_x = point_list[i]['x'];
-//         }
-//         if (point_list[i]['y'] > max_y) {
-//             max_y = point_list[i]['y'];
-//         }
-//         if (point_list[i]['y'] < min_y) {
-//             min_y = point_list[i]['y'];
-//         }
-//     }
-//     mid_x = (min_x + max_x) / 2;
-//     mid_y = (min_y + max_y) / 2;
-// }
-
 function draw_point(c1_x, c1_y, style) {
  var canvas0 = document.getElementById('myCanvas_1');
  var cxt = canvas0.getContext('2d');
@@ -161,17 +132,6 @@ function point_list_gen(pt_list, no_of_sides, size, center_x, center_y) {
  window[pt_list].push({'x':window[pt_list][0]['x'], 'y':window[pt_list][0]['y'], 'drag':false});
 }
 
-// function draw_quad(x_m, y_m, prev_x, prev_y, x_1, y_1, style) {
-//     var canvas0 = document.getElementById('myCanvas0');
-//     var cxt = canvas0.getContext('2d');
-//     cxt.beginPath();
-//     cxt.strokeStyle = style;
-//     cxt.moveTo(x_m, y_m);
-//     cxt.quadraticCurveTo(prev_x, prev_y, x_1, y_1);
-//     cxt.lineWidth = 2;
-//     cxt.stroke();
-// }
-
 function draw_line(x0,y0,x1,y1, style) {
  var c = document.getElementById("myCanvas_1");
  var cxt = c.getContext("2d");
@@ -181,43 +141,6 @@ function draw_line(x0,y0,x1,y1, style) {
  cxt.lineTo(x1, y1);
  cxt.stroke();
 }
-
-// var numberOfSides = 16,
-//     size = 200,
-//     Xcenter = 300,
-//     Ycenter = 300;
-
-// prev_x = Xcenter + size * Math.cos(0);
-// prev_y = Ycenter + size * Math.sin(0);
-//
-// for (var i = 0; i < numberOfSides; i = i + 1) {
-//     var x_1 = Xcenter + size * Math.cos((i + 1) * 2 * Math.PI / numberOfSides);
-//     var y_1 = Ycenter + size * Math.sin((i + 1) * 2 * Math.PI / numberOfSides);
-//     if (i == 0) {
-//         point_list.push({
-//             'x': (prev_x + x_1) / 2,
-//             'y': (prev_y + y_1) / 2,
-//             'drag': false
-//         });
-//     } else {
-//         point_list.push({
-//             'x': (point_list[(i * 2) - 1]['x'] + x_1) / 2,
-//             'y': (point_list[(i * 2) - 1]['y'] + y_1) / 2,
-//             'drag': false
-//         });
-//     }
-//     point_list.push({
-//         'x': x_1,
-//         'y': y_1,
-//         'drag': false
-//     });
-// }
-
-// point_list.unshift({
-//     'x': prev_x,
-//     'y': prev_y,
-//     'drag': false
-// })
 
 function draw_polygon(pt_list, style) {
  for (var i = 0; i <  window[pt_list].length-1; i = i + 1) {
