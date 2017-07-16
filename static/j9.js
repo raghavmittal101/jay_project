@@ -28,9 +28,21 @@ var BB = canvas0.getBoundingClientRect();
 var offsetX = BB.left;
 var offsetY = BB.top;
 
+var userDetails = [];
+function getDetails(){
+  if(document.getElementById("tnc-check").checked && !document.getElementById("email-input").validity.typeMismatch){
+    username = document.getElementById("name-input").value;
+    email = document.getElementById("email-input").value;
+    userDetails.push(username); userDetails.push(email);
+    console.log(userDetails);
+    document.getElementById("cover").remove();
+  }
+}
+
 function Save() {
     // TAKE THIS JSON AND STORE
-    var json_obj = {"id": img_array[count], "list": point_list_1.concat(point_list_2)};
+    var list = [];
+    var json_obj = {"id": img_array[count], "list": list.concat(userDetails, point_list_1, point_list_2)};
     document.getElementById('save-btn').disabled = true;
     document.getElementById('save-btn').innerText = "Saving...";
     send(json_obj);
@@ -319,6 +331,7 @@ window.onload = function() {
     document.getElementById("FileName").innerHTML = "drishtiGS_001";
     document.getElementById("ImageCount").innerHTML = count+1;
     cxt0.drawImage(first_img, 0, 0);
+    document.getElementById("cover").style.display = "block";
 }
 
 init();
