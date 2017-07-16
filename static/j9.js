@@ -30,7 +30,10 @@ var offsetY = BB.top;
 
 var userDetails = [];
 function getDetails(){
-  if(document.getElementById("tnc-check").checked && !document.getElementById("email-input").validity.typeMismatch){
+  if(document.getElementById("tnc-check").checked &&
+    !document.getElementById("email-input").validity.typeMismatch &&
+    !document.getElementById("email-input").validity.valueMissing &&
+    !document.getElementById("name-input").validity.valueMissing){
     username = document.getElementById("name-input").value;
     email = document.getElementById("email-input").value;
     userDetails.push(username); userDetails.push(email);
