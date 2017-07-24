@@ -20,7 +20,7 @@ def countImages():
 	"""
 	function to counter number of images inside static/all_images folder
 	"""
-	ls = os.listdir('static/all_images/')
+	ls = os.listdir('static/images/set_a/')
 	count = len(ls)
 	return count
 
