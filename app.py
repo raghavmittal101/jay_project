@@ -16,11 +16,20 @@ import os
 app = Flask(__name__)
 CORS(app)
 
-def countImages():
+def iterateImages(set_name):
 	"""
-	function to counter number of images inside static/all_images folder
+	creating a list for all available images in a folder
 	"""
-	ls = os.listdir('static/images/set_a/')
+	image_names = []
+	for filename in os.listdir(os.path.join('static', 'images', set_name, '')):
+		image_names.append(os.path.join(set_name, filename))
+	return image_names
+		
+def countImages(set_name):
+	"""
+	function to counter number of images inside folder
+	"""
+	ls = os.listdir('{}{}/'.format('static/images/', set_name))
 	count = len(ls)
 	return count
 
@@ -47,7 +56,7 @@ def index():
 	"""
 	Function to render the index page, that is j9.html.
 	"""
-	return (render_template('j9.html', total_img = countImages()))
+	return (render_template('j9.html', total_img = countImages('set_a'), image_names = iterateImages('set_a')))
 
 @app.route('/api/sheet/read/', methods=['GET'])
 def getSheet():

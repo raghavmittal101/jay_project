@@ -6,9 +6,13 @@ var canvas1 = document.getElementById('myCanvas0');
 var cxt0 = canvas1.getContext('2d');
 
 var image_path = getPath();
+var image_list = ['drishtiGS_094.png', 'drishtiGS_026.png', 'drishtiGS_075.png', 'drishtiGS_081.png', 'drishtiGS_084.png', 'drishtiGS_031.png', 'drishtiGS_098.png', 'drishtiGS_036.png', 'drishtiGS_051.png', 'drishtiGS_045.png', 'drishtiGS_080.png', 'drishtiGS_047.png', 'drishtiGS_060.png', 'drishtiGS_035.png', 'drishtiGS_008.png', 'drishtiGS_057.png', 'drishtiGS_017.png', 'drishtiGS_076.png', 'drishtiGS_024.png', 'drishtiGS_012.png', 'drishtiGS_032.png', 'drishtiGS_037.png', 'drishtiGS_062.png', 'drishtiGS_068.png', 'drishtiGS_042.png', 'drishtiGS_002.png', 'drishtiGS_101.png', 'drishtiGS_089.png', 'drishtiGS_022.png', 'drishtiGS_061.png', 'drishtiGS_069.png', 'drishtiGS_046.png', 'drishtiGS_033.png', 'drishtiGS_090.png', 'drishtiGS_049.png', 'drishtiGS_004.png', 'drishtiGS_092.png', 'drishtiGS_063.png', 'drishtiGS_016.png', 'drishtiGS_041.png', 'drishtiGS_044.png', 'drishtiGS_058.png', 'drishtiGS_088.png', 'drishtiGS_064.png'];
+;
+
+console.log(image_list);
 var first_img = document.createElement
 var first_img = document.createElement("img");
-first_img.src = image_path + img_array[0];
+first_img.src = image_path + image_list[count];
 cxt0.drawImage(first_img, 0, 0);
 
 var point_list_1 = [];
@@ -45,7 +49,7 @@ function getDetails(){
 function Save() {
     // TAKE THIS JSON AND STORE
     var list = [];
-    var json_obj = {"id": img_array[count], "user_info": userDetails, "list": list.concat(point_list_1, point_list_2)};
+    var json_obj = {"id": image_list[count], "user_info": userDetails, "list": list.concat(point_list_1, point_list_2)};
     document.getElementById('save-btn').disabled = true;
     document.getElementById('save-btn').innerText = "Saving...";
     send(json_obj);
@@ -62,11 +66,11 @@ function Previous(){
     document.getElementById('prev-btn').innerText = 'Loading';
     // document.getElementById('loader').style.display = 'inline-block';
     var img = new Image();
-    img.src = image_path + img_array[count]
+    img.src = image_path + image_list[count];
     img.onload = function(){
         cxt0.clearRect(0, 0, canvas0.width, canvas0.height);
         cxt0.drawImage(img, 0, 0);
-        document.getElementById("FileName").innerHTML = img_array[count];
+        document.getElementById("FileName").innerHTML = image_list[count];
         document.getElementById("ImageCount").innerHTML = count+1;
         // document.getElementById('loader').style.display = 'none';
         document.getElementById('prev-btn').innerText = 'Previous';
@@ -80,11 +84,11 @@ function Next() {
     document.getElementById('next-btn').innerText = 'Loading';
     // document.getElementById('loader').style.display = 'inline-block';
     var img = new Image();
-    img.src = image_path + img_array[count]
+    img.src = img.src = image_path + image_list[count];
     img.onload = function(){
         cxt0.clearRect(0, 0, canvas0.width, canvas0.height);
         cxt0.drawImage(img, 0, 0);
-        document.getElementById("FileName").innerHTML = img_array[count];
+        document.getElementById("FileName").innerHTML = image_list[count];
         document.getElementById("ImageCount").innerHTML = count+1;
         // document.getElementById('loader').style.display = 'none';
         document.getElementById('next-btn').innerText = 'Next';
