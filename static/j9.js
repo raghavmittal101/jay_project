@@ -336,7 +336,7 @@ function init() {
 
 window.onload = function() {
 	document.getElementById("cover").style.display = "block";
-    document.getElementById("FileName").innerHTML = "drishtiGS_001";
+    document.getElementById("FileName").innerHTML = image_list[count];
     document.getElementById("ImageCount").innerHTML = count+1;
     cxt0.drawImage(first_img, 0, 0);
 }

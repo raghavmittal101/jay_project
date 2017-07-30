@@ -1,1 +1,0 @@
-var img_array = ["drishtiGS_001.png", "drishtiGS_002.png", "drishtiGS_003.png", "drishtiGS_004.png", "drishtiGS_005.png", "drishtiGS_006.png", "drishtiGS_007.png", "drishtiGS_008.png", "drishtiGS_009.png", "drishtiGS_010.png", "drishtiGS_011.png", "drishtiGS_012.png", "drishtiGS_013.png", "drishtiGS_014.png", "drishtiGS_015.png", "drishtiGS_016.png", "drishtiGS_017.png"];
