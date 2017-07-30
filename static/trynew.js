@@ -72,7 +72,7 @@ function Canvas(){
 
     this.drawImage = function(){
         var first_img = document.createElement("img");
-        first_img.src = init.image_path + init.image_list[init.count];
+        first_img.src = init.image_path + init.image_list[init.counter];
         this.cxt.drawImage(first_img, 0, 0);
     };
 }
@@ -138,14 +138,11 @@ function User(){
 }
 
 function init(){
-    this.scrollToMiddle = function(){
-        window.scrollTo(window.scrollMaxX/2, window.scrollMaxY/2);
-    };
 
-    this.count = 0;
-    this.polygon = 1;
-    this.image_path = getPath();
-    this.image_list = ['drishtiGS_094.png', 'drishtiGS_026.png', 'drishtiGS_075.png', 'drishtiGS_081.png', 
+    init.counter = 0;
+    init.polygon = 1;
+    init.image_path = getPath();
+    init.image_list = ['drishtiGS_094.png', 'drishtiGS_026.png', 'drishtiGS_075.png', 'drishtiGS_081.png', 
     'drishtiGS_084.png', 'drishtiGS_031.png', 'drishtiGS_098.png', 'drishtiGS_036.png', 'drishtiGS_051.png', 
     'drishtiGS_045.png', 'drishtiGS_080.png', 'drishtiGS_047.png', 'drishtiGS_060.png', 'drishtiGS_035.png', 
     'drishtiGS_008.png', 'drishtiGS_057.png', 'drishtiGS_017.png', 'drishtiGS_076.png', 'drishtiGS_024.png', 
@@ -155,261 +152,254 @@ function init(){
     'drishtiGS_049.png', 'drishtiGS_004.png', 'drishtiGS_092.png', 'drishtiGS_063.png', 'drishtiGS_016.png', 
     'drishtiGS_041.png', 'drishtiGS_044.png', 'drishtiGS_058.png', 'drishtiGS_088.png', 'drishtiGS_064.png'];
 
-    var point1 = new Points();
-    point1.init(18, 200, 300, 300);
+    init.point1 = new Points();
+    init.point1.init(18, 200, 300, 300);
 
-    var point2 = new Points();
-    point2.init(14, 150, 500, 500);
+    init.point2 = new Points();
+    init.point2.init(14, 150, 500, 500);
 
-    var image_canvas = new Canvas();
-    image_canvas.init('myCanvas0');
+    init.image_canvas = new Canvas();
+    init.image_canvas.init('myCanvas0');
 
-    var point_canvas = new Canvas();
-    point_canvas.init('myCanvas_1');
+    init.point_canvas = new Canvas();
+    init.point_canvas.init('myCanvas_1');
 
-    image_canvas.drawImage();
+    init.image_canvas.drawImage();
 
-    var user = new User();
-    user.getDetails();
+    this.user = new User();
+    this.user.getDetails();
 
-    return setInterval(point_canvas.drawFullFigure(point1, point2, this.polygon), 10);
-}
-////OBJ////////OBJ////////OBJ////////OBJ////////OBJ////////OBJ////
+    this.dragok = false;
+    this.drag_cent_1 = false;
+    this.drag_cent_2 = false;    
+    var BB = init.point_canvas.element.getBoundingClientRect();
+    this.offsetX = BB.left;
+    this.offsetY = BB.top;
 
+    this.startX;
+    this.startY;
 
+    this.u = new ui();
 
-
-////////////////////////////////////////
-
-///////--------------------------------/
-
-var dragok = false;
-var drag_cent_1 = false;
-var drag_cent_2 = false;
-
-var startX;
-var startY;
-
-var BB = canvas0.getBoundingClientRect();
-var offsetX = BB.left;
-var offsetY = BB.top;
-
-
-function Save() {
-    // TAKE THIS JSON AND STORE
-    var list = [];
-    var json_obj = {"id": image_list[count], "user_info": userDetails, "list": list.concat(point_list_1, point_list_2)};
-    document.getElementById('save-btn').disabled = true;
-    document.getElementById('save-btn').innerText = "Saving...";
-    send(json_obj);
-    console.log(JSON.stringify(json_obj));
-    document.getElementById('save-btn').disabled = false;
-    document.getElementById('save-btn').innerText = "Save";
-    return;
+    return setInterval(init.point_canvas.drawFullFigure(this.point1, this.point2, this.polygon), 10);
 }
 
-function loadImage(button_id, button_text, image_list, image_path, count){
-    /*
-        Load new image in canvas.
+function ui(){
 
-        button_id: `ID` attribute of the button which will trigger the action.
-        button_text: Inner text of button like 'Previous', 'Next'.
-        image_list: List of names of all the images to be shown.
-        image_path: Path to be prepended to each name of image which will link source with proper location.
-        count: Count is the position of image in image_name list which is to be loaded in canvas.
-    */
-    document.getElementById(button_id).disabled = true;
-    document.getElementById(button_id).innerText = 'Loading';
-    var img = new Image();
-    img.src = image_path + image_list[count];
-    scrollToMiddle();
-    img.onload = function(){
-        cxt0.clearRect(0, 0, canvas0.width, canvas0.height);
-        cxt0.drawImage(img, 0, 0);
-        document.getElementById("FileName").innerHTML = image_list[count];
-        document.getElementById("ImageCount").innerHTML = count+1;
-        document.getElementById(button_id).innerText = button_text;
-        document.getElementById(button_id).disabled = false;
+    this.scrollToMiddle = function(){
+        window.scrollTo(window.scrollMaxX/2, window.scrollMaxY/2);
+    };
+    this.save = function(p1, p2) {
+        // TAKE THIS JSON AND STORE
+        var list = [];
+        var json_obj = {"id": init.image_list[count], "user_info": User.userDetails, "list": list.concat(p1.list, p2.list)};
+        document.getElementById('save-btn').disabled = true;
+        document.getElementById('save-btn').innerText = "Saving...";
+        send(json_obj);
+        console.log(JSON.stringify(json_obj));
+        document.getElementById('save-btn').disabled = false;
+        document.getElementById('save-btn').innerText = "Save";
+        return;
+    };
+
+    this.myDown = function(e) {
+
+        var mx = parseInt(e.pageX-init.offsetX);
+        var my = parseInt(e.pageY-init.offsetY);
+
+        init.dragok = false;
+        
+        init.point1.updateCenter();
+        if(Math.pow((init.point1.center_x - mx), 2) + Math.pow((init.point1.center_x - my), 2) < 25) {
+            init.polygon = 1
+            init.drag_cent_1 = true;
+        }
+        for(var i = 0;i < init.point1.list.length; i = i + 1) {
+            var sx = init.point1.list[i].x;
+            var sy = init.point1.list[i].y;
+            var dx = sx - mx;
+            var dy = sy - my;
+            if(dx*dx + dy*dy < 25) {
+                init.polygon = 1;
+                init.dragok = true;
+                init.point1.list[i].drag = true;
+            }
+        }
+
+        init.point2.updateCenter();
+        if(Math.pow((init.point2.center_x - mx), 2) + Math.pow((init.point2.center_y - my), 2) < 25) {
+            init.polygon =  2;
+            init.drag_cent_2 = true;
+        }
+        for(var i = 0;i < init.point2.list.length; i = i + 1) {
+            var sx = init.point2.list[i].x;
+            var sy = init.point2.list[i].y;
+            var dx = sx - mx;
+            var dy = sy - my;
+            if(dx*dx + dy*dy < 25) {
+                init.polygon =  2;
+                init.dragok = true;
+                init.point2.list[i].drag = true;
+            }
+        }
+
+        init.startX = mx;
+        init.startY = my;
+    };
+
+    this.myUp = function(e) {
+        init.dragok = false;
+        for(var i=0; i<init.point1.list.length; i++) {
+            init.point1.list[i]['drag']=false;
+        }
+        for(var i=0;i<init.point2.list.length;i++) {
+            init.point2.list[i]['drag']=false;
+        }
+        init.drag_cent_1 = false;
+        init.drag_cent_2 = false;
+    };
+
+
+    this.myMove = function(e) {
+        var mx = parseInt(e.pageX-init.offsetX);
+        var my = parseInt(e.pageY-init.offsetY);
+        var dx = mx-init.startX;
+        var dy = my-init.startY;
+        if (init.dragok) {
+            for(var i=0;i < init.point1.list.length;i++) {
+                var s1 = init.point1.list[i];
+                if(s1['drag']) {
+                    s1['x']+=dx;
+                    s1['y']+=dy;
+                }
+            }
+            for(var i=0;i < init.point2.list.length;i++) {
+                var s2 = init.point2.list[i];
+                if(s2['drag']) {
+                    s2['x']+=dx;
+                    s2['y']+=dy;
+                }
+            }
+        }
+        if(init.drag_cent_1) {
+            for(var i = 0; i < init.point1.list.length; i++) {
+                init.point1.list[i]['x'] += dx;
+                init.point1.list[i]['y'] += dy;
+            }
+        }
+
+        if(init.drag_cent_2) {
+            for(var i = 0; i < init.point2.list.length; i++) {
+                init.point2.list[i]['x'] += dx;
+                init.point2.list[i]['y'] += dy;
+            }
+        }
+
+        init.startX = init.mx;
+        init.startY = init.my;
+    };
+
+    this.scale = function (factor, point) {
+        point.updateCenter()
+        var x_before = point.list.center_x;
+        var y_before = point.list.center_y;
+        for(var i = 0; i < point.list.length; i++) {
+        point.list[i]['x'] = point.list[i]['x'] * factor;
+        point.list[i]['y'] = point.list[i]['y'] * factor;
+        }
+    
+        point.updateCenter()
+        var x_dif = point.list.center_x - x_before;
+        var y_dif = point.list.center_y - y_before;
+        for(var i = 0; i < point.list.length; i++) {
+            point.list[i]['x'] = point.list[i]['x'] - x_dif;
+            point.list[i]['y'] = point.list[i]['y'] - y_dif;
+        }
+    };
+
+    this.scaleDown = function()   {
+        if(init.polygon == 1) {
+            this.scale(.99, init.point1);
+        }
+        else if (init.polygon == 2) {
+            this.scale(.99, init.point2);
+        }
+    };
+
+    this.scaleUp = function()   {
+        if(init.polygon == 1) {
+            this.scale(1.01, init.point1);
+        }
+        else if (init.polygon == 2) {
+            this.scale(1.01, init.point2);
+        }
+    };
+
+    this.loadImage = function(button_id, button_text){
+        /*
+            Load new image in canvas.
+
+            button_id: `ID` attribute of the button which will trigger the action.
+            button_text: Inner text of button like 'Previous', 'Next'.
+            image_list: List of names of all the images to be shown.
+            image_path: Path to be prepended to each name of image which will link source with proper location.
+            count: Count is the position of image in image_name list which is to be loaded in canvas.
+        */
+        document.getElementById(button_id).disabled = true;
+        document.getElementById(button_id).innerText = 'Loading';
+        var img = new Image();
+        img.src = init.image_path + init.image_list[init.counter];
+        this.scrollToMiddle();
+        img.onload = function(){
+            init.image_canvas.clear();
+            init.image_canvas.drawImage(img, 0, 0);
+            document.getElementById("FileName").innerHTML = init.image_list[count];
+            document.getElementById("ImageCount").innerHTML = init.counter+1;
+            document.getElementById(button_id).innerText = button_text;
+            document.getElementById(button_id).disabled = false;
+        };
+    };
+
+    this.Previous = function(){
+        if(init.counter == 0){return null;}
+        else init.counter = init.counter - 1;
+        this.loadImage('prev-btn', 'Previous')
+    };
+
+    this.Next = function() {
+        init.counter = init.counter + 1;
+        this.loadImage('next-btn', 'Next')
+    };
+
+    this.send = function(json_obj) {
+        var xhr = new XMLHttpRequest();
+
+        // URL to be changed later
+        xhr.open("POST", "./api/sheet/write/", false);
+        xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+        xhr.setRequestHeader("Content-Type", "application/json, charset=UTF-8");
+        xhr.send(JSON.stringify(json_obj));
+        xhr.onreadystatechange = processRequest;
+
+        function processRequest(e) {
+            if (xhr.readyState == 4) {
+                console.log(xhr.responseText);
+            }
+        }
+        return
     };
 }
 
-function Previous(){
-	if(count == 0){return null;}
-	else count = count - 1;
-    loadImage('prev-btn', 'Previous', image_list, image_path, count)
-}
-
-function Next() {
-	count = count + 1;
-    loadImage('next-btn', 'Next', image_list, image_path, count)
-}
-
-
-function scale(factor, pt_list) {
- var x_before = center(pt_list)['mid_x'];
- var y_before = center(pt_list)['mid_y'];
- for(var i = 0; i < window[pt_list].length; i++) {
-  window[pt_list][i]['x'] = window[pt_list][i]['x'] * factor;
-  window[pt_list][i]['y'] = window[pt_list][i]['y'] * factor;
- }
- var x_dif = center(pt_list)['mid_x'] - x_before;
- var y_dif = center(pt_list)['mid_y'] - y_before;
- for(var i = 0; i < window[pt_list].length; i++) {
-  window[pt_list][i]['x'] = window[pt_list][i]['x'] - x_dif;
-  window[pt_list][i]['y'] = window[pt_list][i]['y'] - y_dif;
- }
-}
-
-function ScaleDown()   {
- if(polygon_1 == true) {
-  scale(.99, "point_list_1");
- }
- else if (polygon_2 == true) {
-  scale(.99, "point_list_2");
- }
-}
-
-function ScaleUp()   {
- if(polygon_1 == true) {
-  scale(1.01, "point_list_1");
- }
- else if (polygon_2 == true) {
-  scale(1.01, "point_list_2");
- }
-}
-
-
-
-
-function myDown(e) {
-
- var mx = parseInt(e.pageX-offsetX);
- var my = parseInt(e.pageY-offsetY);
-
- dragok = false;
-
-  if(Math.pow((center("point_list_1")['mid_x'] - mx), 2) + Math.pow((center("point_list_1")['mid_y'] - my), 2) < 25) {
-   polygon_1 = true;
-   polygon_2 = false;
-   drag_cent_1 = true;
-  }
-  for(var i = 0;i < point_list_1.length; i = i + 1) {
-   var sx = point_list_1[i]['x'];
-   var sy = point_list_1[i]['y'];
-   var dx = sx - mx;
-   var dy = sy - my;
-   if(dx*dx + dy*dy < 25) {
-    polygon_1 = true;
-    polygon_2 = false;
-    dragok = true;
-    point_list_1[i]['drag'] = true;
-   }
-  }
-
-  if(Math.pow((center("point_list_2")['mid_x'] - mx), 2) + Math.pow((center("point_list_2")['mid_y'] - my), 2) < 25) {
-    polygon_1 = false;
-    polygon_2 =  true;
-   drag_cent_2 = true;
-  }
-  for(var i = 0;i < point_list_2.length; i = i + 1) {
-   var sx = point_list_2[i]['x'];
-   var sy = point_list_2[i]['y'];
-   var dx = sx - mx;
-   var dy = sy - my;
-   if(dx*dx + dy*dy < 25) {
-    polygon_1 = false;
-    polygon_2 =  true;
-    dragok = true;
-    point_list_2[i]['drag'] = true;
-   }
-  }
-
- startX = mx;
- startY = my;
-}
-
-function myUp(e) {
- dragok = false;
- for(var i=0;i<point_list_1.length;i++) {
-  point_list_1[i]['drag']=false;
- }
- for(var i=0;i<point_list_2.length;i++) {
-  point_list_2[i]['drag']=false;
- }
- drag_cent_1 = false;
- drag_cent_2 = false;
-}
-
-function myMove(e) {
- var mx = parseInt(e.pageX-offsetX);
- var my = parseInt(e.pageY-offsetY);
- var dx = mx-startX;
- var dy = my-startY;
- if (dragok) {
-  for(var i=0;i < point_list_1.length;i++) {
-   var s1 = point_list_1[i];
-   if(s1['drag']) {
-    s1['x']+=dx;
-    s1['y']+=dy;
-   }
-  }
-  for(var i=0;i < point_list_2.length;i++) {
-   var s2 = point_list_2[i];
-   if(s2['drag']) {
-    s2['x']+=dx;
-    s2['y']+=dy;
-   }
-  }
- }
- if(drag_cent_1) {
-  for(var i = 0; i < point_list_1.length; i++) {
-   point_list_1[i]['x'] += dx;
-   point_list_1[i]['y'] += dy;
-  }
- }
-
- if(drag_cent_2) {
-  for(var i = 0; i < point_list_2.length; i++) {
-   point_list_2[i]['x'] += dx;
-   point_list_2[i]['y'] += dy;
-  }
- }
-
- startX = mx;
- startY = my;
-}
-
-
-
-
-
 window.onload = function() {
-	document.getElementById("cover").style.display = "block";
-    document.getElementById("FileName").innerHTML = image_list[count];
-    document.getElementById("ImageCount").innerHTML = count+1;
-    cxt0.drawImage(first_img, 0, 0);
+	init();
+    
+    this.point_canvas.element.onmousedown = myDown;
+    this.point_canvas.element.onmouseup = myUp;
+    this.point_canvas.element.onmousemove = myMove;
 }
 
-init();
 
-canvas0.onmousedown = myDown;
-canvas0.onmouseup = myUp;
-canvas0.onmousemove = myMove;
 
-function send(json_obj) {
-    var xhr = new XMLHttpRequest();
 
-    // URL to be changed later
-    xhr.open("POST", "./api/sheet/write/", false);
-    xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-    xhr.setRequestHeader("Content-Type", "application/json, charset=UTF-8");
-    xhr.send(JSON.stringify(json_obj));
-    xhr.onreadystatechange = processRequest;
+////OBJ////////OBJ////////OBJ////////OBJ////////OBJ////////OBJ////
 
-    function processRequest(e) {
-        if (xhr.readyState == 4) {
-            console.log(xhr.responseText);
-        }
-    }
-    return
-}
