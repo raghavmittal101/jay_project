@@ -141,13 +141,13 @@ function ScaleUp()   {
 }
 
 function draw_point(c1_x, c1_y, style) {
- var canvas0 = document.getElementById('myCanvas_1');
- var cxt = canvas0.getContext('2d');
- cxt.beginPath();
- cxt.strokeStyle =  style;
- cxt.arc(c1_x, c1_y, 5, 0, 2 * Math.PI, false);
- cxt.lineWidth = 3;
- cxt.stroke();
+    var canvas0 = document.getElementById('myCanvas_1');
+    var cxt = canvas0.getContext('2d');
+    cxt.beginPath();
+    cxt.strokeStyle =  style;
+    cxt.arc(c1_x, c1_y, 5, 0, 2 * Math.PI, false);
+    cxt.lineWidth = 3;
+    cxt.stroke();
 }
 
 function point_list_gen(pt_list, no_of_sides, size, center_x, center_y) {
@@ -160,25 +160,25 @@ function point_list_gen(pt_list, no_of_sides, size, center_x, center_y) {
 }
 
 function draw_line(x0,y0,x1,y1, style) {
- var c = document.getElementById("myCanvas_1");
- var cxt = c.getContext("2d");
- cxt.beginPath();
- cxt.strokeStyle = style;
- cxt.moveTo(x0, y0);
- cxt.lineTo(x1, y1);
- cxt.stroke();
+    var c = document.getElementById("myCanvas_1");
+    var cxt = c.getContext("2d");
+    cxt.beginPath();
+    cxt.strokeStyle = style;
+    cxt.moveTo(x0, y0);
+    cxt.lineTo(x1, y1);
+    cxt.stroke();
 }
 
 function draw_polygon(pt_list, style) {
- for (var i = 0; i <  window[pt_list].length-1; i = i + 1) {
-  draw_line(window[pt_list][i]['x'], window[pt_list][i]['y'], window[pt_list][i+1]['x'], window[pt_list][i+1]['y'], style);
- }
+    for (var i = 0; i <  window[pt_list].length-1; i = i + 1) {
+        draw_line(window[pt_list][i]['x'], window[pt_list][i]['y'], window[pt_list][i+1]['x'], window[pt_list][i+1]['y'], style);
+    }
 }
 
 function draw_points(pt_list, style) {
- for(var i = 0; i < window[pt_list].length; i = i + 1) {
-  draw_point(window[pt_list][i]['x'], window[pt_list][i]['y'], style);
- }
+    for(var i = 0; i < window[pt_list].length; i = i + 1) {
+        draw_point(window[pt_list][i]['x'], window[pt_list][i]['y'], style);
+}
 }
 
 function myDown(e) {
