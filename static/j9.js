@@ -32,6 +32,11 @@ var BB = canvas0.getBoundingClientRect();
 var offsetX = BB.left;
 var offsetY = BB.top;
 
+function scrollToMiddle(){
+    window.scrollTo(window.scrollMaxX/2, window.scrollMaxY/2);
+    return;
+}
+
 var userDetails = [];
 function getDetails(){
   if(document.getElementById("tnc-check").checked &&
@@ -59,41 +64,40 @@ function Save() {
     return;
 }
 
-function Previous(){
-	if(count == 0){return null;}
-	else count = count - 1;
-    document.getElementById('prev-btn').disabled = true;
-    document.getElementById('prev-btn').innerText = 'Loading';
-    // document.getElementById('loader').style.display = 'inline-block';
+function loadImage(button_id, button_text, image_list, image_path, count){
+    /*
+        Load new image in canvas.
+
+        button_id: `ID` attribute of the button which will trigger the action.
+        button_text: Inner text of button like 'Previous', 'Next'.
+        image_list: List of names of all the images to be shown.
+        image_path: Path to be prepended to each name of image which will link source with proper location.
+        count: Count is the position of image in image_name list which is to be loaded in canvas.
+    */
+    document.getElementById(button_id).disabled = true;
+    document.getElementById(button_id).innerText = 'Loading';
     var img = new Image();
     img.src = image_path + image_list[count];
+    scrollToMiddle();
     img.onload = function(){
         cxt0.clearRect(0, 0, canvas0.width, canvas0.height);
         cxt0.drawImage(img, 0, 0);
         document.getElementById("FileName").innerHTML = image_list[count];
         document.getElementById("ImageCount").innerHTML = count+1;
-        // document.getElementById('loader').style.display = 'none';
-        document.getElementById('prev-btn').innerText = 'Previous';
-        document.getElementById('prev-btn').disabled = false;
+        document.getElementById(button_id).innerText = button_text;
+        document.getElementById(button_id).disabled = false;
     };
+}
+
+function Previous(){
+	if(count == 0){return null;}
+	else count = count - 1;
+    loadImage('prev-btn', 'Previous', image_list, image_path, count)
 }
 
 function Next() {
 	count = count + 1;
-    document.getElementById('next-btn').disabled = true;
-    document.getElementById('next-btn').innerText = 'Loading';
-    // document.getElementById('loader').style.display = 'inline-block';
-    var img = new Image();
-    img.src = img.src = image_path + image_list[count];
-    img.onload = function(){
-        cxt0.clearRect(0, 0, canvas0.width, canvas0.height);
-        cxt0.drawImage(img, 0, 0);
-        document.getElementById("FileName").innerHTML = image_list[count];
-        document.getElementById("ImageCount").innerHTML = count+1;
-        // document.getElementById('loader').style.display = 'none';
-        document.getElementById('next-btn').innerText = 'Next';
-        document.getElementById('next-btn').disabled = false;
-    };
+    loadImage('next-btn', 'Next', image_list, image_path, count)
 }
 
 
