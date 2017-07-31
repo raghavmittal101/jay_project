@@ -93,6 +93,7 @@ function loadImage(button_id, button_text, image_list, image_path, count, setNum
         document.getElementById(button_id).innerText = button_text;
         document.getElementById(button_id).disabled = false;   
         checkButtonValidity();
+        loadPointsFromDict();
     };
     
 }
@@ -185,15 +186,15 @@ function draw_line(x0,y0,x1,y1, style) {
 }
 
 function draw_polygon(pt_list, style) {
-    for (var i = 0; i <  window[pt_list].length-1; i = i + 1) {
-        draw_line(window[pt_list][i]['x'], window[pt_list][i]['y'], window[pt_list][i+1]['x'], window[pt_list][i+1]['y'], style);
+    for (var i = 0; i <  pt_list.length-1; i = i + 1) {
+        draw_line(pt_list[i]['x'], pt_list[i]['y'], pt_list[i+1]['x'], pt_list[i+1]['y'], style);
     }
 }
 
 function draw_points(pt_list, style) {
-    for(var i = 0; i < window[pt_list].length; i = i + 1) {
-        draw_point(window[pt_list][i]['x'], window[pt_list][i]['y'], style);
-}
+    for(var i = 0; i < pt_list.length; i = i + 1) {
+        draw_point(pt_list[i]['x'], pt_list[i]['y'], style);
+    }
 }
 
 function myDown(e) {
@@ -203,7 +204,7 @@ function myDown(e) {
 
  dragok = false;
 
-  if(Math.pow((center("point_list_1")['mid_x'] - mx), 2) + Math.pow((center("point_list_1")['mid_y'] - my), 2) < 25) {
+  if(Math.pow((center(point_list_1)['mid_x'] - mx), 2) + Math.pow((center(point_list_1)['mid_y'] - my), 2) < 25) {
    polygon_1 = true;
    polygon_2 = false;
    drag_cent_1 = true;
@@ -221,7 +222,7 @@ function myDown(e) {
    }
   }
 
-  if(Math.pow((center("point_list_2")['mid_x'] - mx), 2) + Math.pow((center("point_list_2")['mid_y'] - my), 2) < 25) {
+  if(Math.pow((center(point_list_2)['mid_x'] - mx), 2) + Math.pow((center(point_list_2)['mid_y'] - my), 2) < 25) {
     polygon_1 = false;
     polygon_2 =  true;
    drag_cent_2 = true;
@@ -301,31 +302,31 @@ function initial_point_gen() {
 
 function draw() {
   clear();
-  var mid_x_1 = center("point_list_1")["mid_x"];
-  var mid_y_1 = center("point_list_1")["mid_y"];
+  var mid_x_1 = center(point_list_1)["mid_x"];
+  var mid_y_1 = center(point_list_1)["mid_y"];
 
   if(polygon_1) {
-   draw_polygon("point_list_1", "#00FFFF");
-   draw_points("point_list_1", "#7CFC00");
+   draw_polygon(point_list_1, "#00FFFF");
+   draw_points(point_list_1, "#7CFC00");
    draw_point(mid_x_1, mid_y_1, "#7CFC00");
   }
   else {
-   draw_polygon("point_list_1", "#00FFFF");
-   draw_points("point_list_1",  "#00FFFF");
+   draw_polygon(point_list_1, "#00FFFF");
+   draw_points(point_list_1,  "#00FFFF");
    draw_point(mid_x_1, mid_y_1, "#00FFFF");
   }
 
-  var mid_x_2 = center("point_list_2")["mid_x"];
-  var mid_y_2 = center("point_list_2")["mid_y"];
+  var mid_x_2 = center(point_list_2)["mid_x"];
+  var mid_y_2 = center(point_list_2)["mid_y"];
 
   if(polygon_2) {
-   draw_polygon("point_list_2", "#FFFF00");
-   draw_points("point_list_2", "#7CFC00");
+   draw_polygon(point_list_2, "#FFFF00");
+   draw_points(point_list_2, "#7CFC00");
    draw_point(mid_x_2, mid_y_2, "#7CFC00");
   }
   else {
-   draw_polygon("point_list_2", "#FFFF00");
-   draw_points("point_list_2",  "#FFFF00");
+   draw_polygon(point_list_2, "#FFFF00");
+   draw_points(point_list_2,  "#FFFF00");
    draw_point(mid_x_2, mid_y_2, "#FFFF00");
   }
 }
@@ -333,19 +334,19 @@ function draw() {
 
 // This function generates coordinates of center from list of polygon points
 function center(point_list) {
- var max_x = window[point_list][0]['x'];
- var max_y = window[point_list][0]['y'];
- var min_x = window[point_list][0]['x'];
- var min_y = window[point_list][0]['y'];
- for(var i = 0; i < window[point_list].length; i++) {
-  if (window[point_list][i]['x'] > max_x) { max_x = window[point_list][i]['x']; }
-  if (window[point_list][i]['x'] < min_x) { min_x = window[point_list][i]['x']; }
-  if (window[point_list][i]['y'] > max_y) { max_y = window[point_list][i]['y']; }
-  if (window[point_list][i]['y'] < min_y) { min_y = window[point_list][i]['y']; }
- }
- var mid_x = (min_x + max_x)/2;
- var mid_y = (min_y + max_y)/2;
- return {"mid_x": mid_x, "mid_y":mid_y};
+    var max_x = point_list[0]['x'];
+    var max_y = point_list[0]['y'];
+    var min_x = point_list[0]['x'];
+    var min_y = point_list[0]['y'];
+    for(var i = 0; i < point_list.length; i++) {
+        if (point_list[i]['x'] > max_x) { max_x = point_list[i]['x']; }
+        if (point_list[i]['x'] < min_x) { min_x = point_list[i]['x']; }
+        if (point_list[i]['y'] > max_y) { max_y = point_list[i]['y']; }
+        if (point_list[i]['y'] < min_y) { min_y = point_list[i]['y']; }
+    }
+    var mid_x = (min_x + max_x)/2;
+    var mid_y = (min_y + max_y)/2;
+    return {"mid_x": mid_x, "mid_y":mid_y};
 }
 
 function init() {
@@ -400,4 +401,46 @@ function send(json_obj) {
         }
     }
     return
+}
+
+image_dict = [
+    {
+        'id':'drishtiGS_094.png',
+        'point_list_1' : '[{"x":1010,"y":415,"drag":false},{"x":72,"y":432.40402866513375,"drag":false},{"x":740.2088886237957,"y":464.55752193730785,"drag":false},{"x":687,"y":509.2050807568877,"drag":false},{"x":621.729635533386,"y":532.9615506024415,"drag":false},{"x":552.270364466614,"y":532.9615506024415,"drag":false},{"x":487,"y":509.20508075688775,"drag":false},{"x":433.7911113762043,"y":464.5575219373079,"drag":false},{"x":399.06147584281837,"y":404.40402866513375,"drag":false},{"x":387,"y":336,"drag":false},{"x":399.06147584281825,"y":267.59597133486625,"drag":false},{"x":433.7911113762043,"y":207.4424780626922,"drag":false},{"x":487,"y":162.79491924311233,"drag":false},{"x":552.270364466614,"y":139.0384493975584,"drag":false},{"x":621.729635533386,"y":139.03844939755837,"drag":false},{"x":687,"y":162.7949192431122,"drag":false},{"x":740.2088886237957,"y":207.4424780626921,"drag":false},{"x":913.9385241571817,"y":238.59597133486625,"drag":false},{"x":1010,"y":415,"drag":false}]',
+        'point_list_2' : '[{"x":1358,"y":376,"drag":false},{"x":1343.1453301853628,"y":441.0825608676337,"drag":false},{"x":1301.52347027881,"y":493.2747223702045,"drag":false},{"x":1241.3781400934472,"y":522.2391868272736,"drag":false},{"x":1174.6218599065528,"y":522.2391868272736,"drag":false},{"x":1114.47652972119,"y":493.2747223702045,"drag":false},{"x":1072.8546698146372,"y":441.0825608676337,"drag":false},{"x":1058,"y":376,"drag":false},{"x":1072.8546698146372,"y":310.9174391323663,"drag":false},{"x":1114.47652972119,"y":258.7252776297955,"drag":false},{"x":1174.6218599065528,"y":229.76081317272644,"drag":false},{"x":1241.378140093447,"y":229.76081317272644,"drag":false},{"x":1301.52347027881,"y":258.7252776297955,"drag":false},{"x":1343.145330185363,"y":310.9174391323664,"drag":false},{"x":1358,"y":376,"drag":false}]'
+    },
+    {
+        'id':'drishtiGS_026.png',
+        'point_list_1' : '[{"x":1076,"y":818,"drag":false},{"x":1058,"y":893.4040286651338,"drag":false},{"x":1010.2088886237957,"y":939.5575219373079,"drag":false},{"x":957,"y":984.2050807568877,"drag":false},{"x":891.729635533386,"y":1007.9615506024415,"drag":false},{"x":822.270364466614,"y":1007.9615506024415,"drag":false},{"x":757,"y":984.2050807568878,"drag":false},{"x":703.7911113762043,"y":939.5575219373079,"drag":false},{"x":669.0614758428184,"y":879.4040286651338,"drag":false},{"x":657,"y":811,"drag":false},{"x":669.0614758428183,"y":742.5959713348662,"drag":false},{"x":703.7911113762043,"y":682.4424780626922,"drag":false},{"x":757,"y":637.7949192431123,"drag":false},{"x":822.270364466614,"y":614.0384493975585,"drag":false},{"x":891.729635533386,"y":614.0384493975583,"drag":false},{"x":957,"y":637.7949192431122,"drag":false},{"x":1010.2088886237957,"y":682.4424780626921,"drag":false},{"x":1060.9385241571817,"y":739.5959713348662,"drag":false},{"x":1076,"y":818,"drag":false}]',
+        'point_list_2' : '[{"x":1013,"y":804,"drag":false},{"x":998.1453301853628,"y":869.0825608676337,"drag":false},{"x":956.52347027881,"y":921.2747223702045,"drag":false},{"x":896.3781400934472,"y":950.2391868272736,"drag":false},{"x":829.6218599065528,"y":950.2391868272736,"drag":false},{"x":769.47652972119,"y":921.2747223702045,"drag":false},{"x":727.8546698146372,"y":869.0825608676337,"drag":false},{"x":713,"y":804,"drag":false},{"x":727.8546698146372,"y":738.9174391323663,"drag":false},{"x":769.47652972119,"y":686.7252776297955,"drag":false},{"x":829.6218599065528,"y":657.7608131727264,"drag":false},{"x":896.378140093447,"y":657.7608131727264,"drag":false},{"x":956.52347027881,"y":686.7252776297955,"drag":false},{"x":998.145330185363,"y":738.9174391323663,"drag":false},{"x":1013,"y":804,"drag":false}]'
+    },
+    {
+        'id':'drishtiGS_075.png',
+        'point_list_1' : '[{"x":1010,"y":415,"drag":false},{"x":72,"y":432.40402866513375,"drag":false},{"x":740.2088886237957,"y":464.55752193730785,"drag":false},{"x":687,"y":509.2050807568877,"drag":false},{"x":621.729635533386,"y":532.9615506024415,"drag":false},{"x":552.270364466614,"y":532.9615506024415,"drag":false},{"x":487,"y":509.20508075688775,"drag":false},{"x":433.7911113762043,"y":464.5575219373079,"drag":false},{"x":399.06147584281837,"y":404.40402866513375,"drag":false},{"x":387,"y":336,"drag":false},{"x":399.06147584281825,"y":267.59597133486625,"drag":false},{"x":433.7911113762043,"y":207.4424780626922,"drag":false},{"x":487,"y":162.79491924311233,"drag":false},{"x":552.270364466614,"y":139.0384493975584,"drag":false},{"x":621.729635533386,"y":139.03844939755837,"drag":false},{"x":687,"y":162.7949192431122,"drag":false},{"x":740.2088886237957,"y":207.4424780626921,"drag":false},{"x":913.9385241571817,"y":238.59597133486625,"drag":false},{"x":1010,"y":415,"drag":false}]',
+        'point_list_2' : '[{"x":1358,"y":376,"drag":false},{"x":1343.1453301853628,"y":441.0825608676337,"drag":false},{"x":1301.52347027881,"y":493.2747223702045,"drag":false},{"x":1241.3781400934472,"y":522.2391868272736,"drag":false},{"x":1174.6218599065528,"y":522.2391868272736,"drag":false},{"x":1114.47652972119,"y":493.2747223702045,"drag":false},{"x":1072.8546698146372,"y":441.0825608676337,"drag":false},{"x":1058,"y":376,"drag":false},{"x":1072.8546698146372,"y":310.9174391323663,"drag":false},{"x":1114.47652972119,"y":258.7252776297955,"drag":false},{"x":1174.6218599065528,"y":229.76081317272644,"drag":false},{"x":1241.378140093447,"y":229.76081317272644,"drag":false},{"x":1301.52347027881,"y":258.7252776297955,"drag":false},{"x":1343.145330185363,"y":310.9174391323664,"drag":false},{"x":1358,"y":376,"drag":false}]'
+    },
+    {
+        'id':'drishtiGS_081.png',
+        'point_list_1' : '[{"x":1076,"y":818,"drag":false},{"x":1058,"y":893.4040286651338,"drag":false},{"x":1010.2088886237957,"y":939.5575219373079,"drag":false},{"x":957,"y":984.2050807568877,"drag":false},{"x":891.729635533386,"y":1007.9615506024415,"drag":false},{"x":822.270364466614,"y":1007.9615506024415,"drag":false},{"x":757,"y":984.2050807568878,"drag":false},{"x":703.7911113762043,"y":939.5575219373079,"drag":false},{"x":669.0614758428184,"y":879.4040286651338,"drag":false},{"x":657,"y":811,"drag":false},{"x":669.0614758428183,"y":742.5959713348662,"drag":false},{"x":703.7911113762043,"y":682.4424780626922,"drag":false},{"x":757,"y":637.7949192431123,"drag":false},{"x":822.270364466614,"y":614.0384493975585,"drag":false},{"x":891.729635533386,"y":614.0384493975583,"drag":false},{"x":957,"y":637.7949192431122,"drag":false},{"x":1010.2088886237957,"y":682.4424780626921,"drag":false},{"x":1060.9385241571817,"y":739.5959713348662,"drag":false},{"x":1076,"y":818,"drag":false}]',
+        'point_list_2' : '[{"x":1013,"y":804,"drag":false},{"x":998.1453301853628,"y":869.0825608676337,"drag":false},{"x":956.52347027881,"y":921.2747223702045,"drag":false},{"x":896.3781400934472,"y":950.2391868272736,"drag":false},{"x":829.6218599065528,"y":950.2391868272736,"drag":false},{"x":769.47652972119,"y":921.2747223702045,"drag":false},{"x":727.8546698146372,"y":869.0825608676337,"drag":false},{"x":713,"y":804,"drag":false},{"x":727.8546698146372,"y":738.9174391323663,"drag":false},{"x":769.47652972119,"y":686.7252776297955,"drag":false},{"x":829.6218599065528,"y":657.7608131727264,"drag":false},{"x":896.378140093447,"y":657.7608131727264,"drag":false},{"x":956.52347027881,"y":686.7252776297955,"drag":false},{"x":998.145330185363,"y":738.9174391323663,"drag":false},{"x":1013,"y":804,"drag":false}]'
+    }
+
+];
+
+
+function loadPointsFromDict(){
+    clearInterval();
+    polygon_1 = true;
+    polygon_2 = true;
+
+    if(image_dict[count]){
+    point_list_1 = JSON.parse(image_dict[count]['point_list_1']);
+    point_list_2 = JSON.parse(image_dict[count]['point_list_2']);}
+
+    setInterval(draw(), 10);
+
+    polygon_1 = false;
+    polygon_2 = false;
+
+    return;
 }
