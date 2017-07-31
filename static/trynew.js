@@ -72,7 +72,7 @@ function Canvas(){
 
     this.drawImage = function(){
         var first_img = document.createElement("img");
-        first_img.src = init.image_path + init.image_list[init.counter];
+        first_img.src = Init.image_path + Init.image_list[Init.counter];
         this.cxt.drawImage(first_img, 0, 0);
     };
 }
@@ -137,53 +137,6 @@ function User(){
     };
 }
 
-function init(){
-
-    init.counter = 0;
-    init.polygon = 1;
-    init.image_path = getPath();
-    init.image_list = ['drishtiGS_094.png', 'drishtiGS_026.png', 'drishtiGS_075.png', 'drishtiGS_081.png', 
-    'drishtiGS_084.png', 'drishtiGS_031.png', 'drishtiGS_098.png', 'drishtiGS_036.png', 'drishtiGS_051.png', 
-    'drishtiGS_045.png', 'drishtiGS_080.png', 'drishtiGS_047.png', 'drishtiGS_060.png', 'drishtiGS_035.png', 
-    'drishtiGS_008.png', 'drishtiGS_057.png', 'drishtiGS_017.png', 'drishtiGS_076.png', 'drishtiGS_024.png', 
-    'drishtiGS_012.png', 'drishtiGS_032.png', 'drishtiGS_037.png', 'drishtiGS_062.png', 'drishtiGS_068.png', 
-    'drishtiGS_042.png', 'drishtiGS_002.png', 'drishtiGS_101.png', 'drishtiGS_089.png', 'drishtiGS_022.png', 
-    'drishtiGS_061.png', 'drishtiGS_069.png', 'drishtiGS_046.png', 'drishtiGS_033.png', 'drishtiGS_090.png', 
-    'drishtiGS_049.png', 'drishtiGS_004.png', 'drishtiGS_092.png', 'drishtiGS_063.png', 'drishtiGS_016.png', 
-    'drishtiGS_041.png', 'drishtiGS_044.png', 'drishtiGS_058.png', 'drishtiGS_088.png', 'drishtiGS_064.png'];
-
-    init.point1 = new Points();
-    init.point1.init(18, 200, 300, 300);
-
-    init.point2 = new Points();
-    init.point2.init(14, 150, 500, 500);
-
-    init.image_canvas = new Canvas();
-    init.image_canvas.init('myCanvas0');
-
-    init.point_canvas = new Canvas();
-    init.point_canvas.init('myCanvas_1');
-
-    init.image_canvas.drawImage();
-
-    this.user = new User();
-    this.user.getDetails();
-
-    this.dragok = false;
-    this.drag_cent_1 = false;
-    this.drag_cent_2 = false;    
-    var BB = init.point_canvas.element.getBoundingClientRect();
-    this.offsetX = BB.left;
-    this.offsetY = BB.top;
-
-    this.startX;
-    this.startY;
-
-    this.u = new ui();
-
-    return setInterval(init.point_canvas.drawFullFigure(this.point1, this.point2, this.polygon), 10);
-}
-
 function ui(){
 
     this.scrollToMiddle = function(){
@@ -192,7 +145,7 @@ function ui(){
     this.save = function(p1, p2) {
         // TAKE THIS JSON AND STORE
         var list = [];
-        var json_obj = {"id": init.image_list[count], "user_info": User.userDetails, "list": list.concat(p1.list, p2.list)};
+        var json_obj = {"id": Init.image_list[count], "user_info": User.userDetails, "list": list.concat(p1.list, p2.list)};
         document.getElementById('save-btn').disabled = true;
         document.getElementById('save-btn').innerText = "Saving...";
         send(json_obj);
@@ -204,99 +157,99 @@ function ui(){
 
     this.myDown = function(e) {
 
-        var mx = parseInt(e.pageX-init.offsetX);
-        var my = parseInt(e.pageY-init.offsetY);
+        var mx = parseInt(e.pageX-Init.offsetX);
+        var my = parseInt(e.pageY-Init.offsetY);
 
-        init.dragok = false;
+        Init.dragok = false;
         
-        init.point1.updateCenter();
-        if(Math.pow((init.point1.center_x - mx), 2) + Math.pow((init.point1.center_x - my), 2) < 25) {
-            init.polygon = 1
-            init.drag_cent_1 = true;
+        Init.point1.updateCenter();
+        if(Math.pow((Init.point1.center_x - mx), 2) + Math.pow((Init.point1.center_x - my), 2) < 25) {
+            Init.polygon = 1
+            Init.drag_cent_1 = true;
         }
-        for(var i = 0;i < init.point1.list.length; i = i + 1) {
-            var sx = init.point1.list[i].x;
-            var sy = init.point1.list[i].y;
+        for(var i = 0;i < Init.point1.list.length; i = i + 1) {
+            var sx = Init.point1.list[i].x;
+            var sy = Init.point1.list[i].y;
             var dx = sx - mx;
             var dy = sy - my;
             if(dx*dx + dy*dy < 25) {
-                init.polygon = 1;
-                init.dragok = true;
-                init.point1.list[i].drag = true;
+                Init.polygon = 1;
+                Init.dragok = true;
+                Init.point1.list[i].drag = true;
             }
         }
 
-        init.point2.updateCenter();
-        if(Math.pow((init.point2.center_x - mx), 2) + Math.pow((init.point2.center_y - my), 2) < 25) {
-            init.polygon =  2;
-            init.drag_cent_2 = true;
+        Init.point2.updateCenter();
+        if(Math.pow((Init.point2.center_x - mx), 2) + Math.pow((Init.point2.center_y - my), 2) < 25) {
+            Init.polygon =  2;
+            Init.drag_cent_2 = true;
         }
-        for(var i = 0;i < init.point2.list.length; i = i + 1) {
-            var sx = init.point2.list[i].x;
-            var sy = init.point2.list[i].y;
+        for(var i = 0;i < Init.point2.list.length; i = i + 1) {
+            var sx = Init.point2.list[i].x;
+            var sy = Init.point2.list[i].y;
             var dx = sx - mx;
             var dy = sy - my;
             if(dx*dx + dy*dy < 25) {
-                init.polygon =  2;
-                init.dragok = true;
-                init.point2.list[i].drag = true;
+                Init.polygon =  2;
+                Init.dragok = true;
+                Init.point2.list[i].drag = true;
             }
         }
 
-        init.startX = mx;
-        init.startY = my;
+        Init.startX = mx;
+        Init.startY = my;
     };
 
     this.myUp = function(e) {
-        init.dragok = false;
-        for(var i=0; i<init.point1.list.length; i++) {
-            init.point1.list[i]['drag']=false;
+        Init.dragok = false;
+        for(var i=0; i<Init.point1.list.length; i++) {
+            Init.point1.list[i]['drag']=false;
         }
-        for(var i=0;i<init.point2.list.length;i++) {
-            init.point2.list[i]['drag']=false;
+        for(var i=0;i<Init.point2.list.length;i++) {
+            Init.point2.list[i]['drag']=false;
         }
-        init.drag_cent_1 = false;
-        init.drag_cent_2 = false;
+        Init.drag_cent_1 = false;
+        Init.drag_cent_2 = false;
     };
 
 
     this.myMove = function(e) {
-        var mx = parseInt(e.pageX-init.offsetX);
-        var my = parseInt(e.pageY-init.offsetY);
-        var dx = mx-init.startX;
-        var dy = my-init.startY;
-        if (init.dragok) {
-            for(var i=0;i < init.point1.list.length;i++) {
-                var s1 = init.point1.list[i];
+        var mx = parseInt(e.pageX-Init.offsetX);
+        var my = parseInt(e.pageY-Init.offsetY);
+        var dx = mx-Init.startX;
+        var dy = my-Init.startY;
+        if (Init.dragok) {
+            for(var i=0;i < Init.point1.list.length;i++) {
+                var s1 = Init.point1.list[i];
                 if(s1['drag']) {
                     s1['x']+=dx;
                     s1['y']+=dy;
                 }
             }
-            for(var i=0;i < init.point2.list.length;i++) {
-                var s2 = init.point2.list[i];
+            for(var i=0;i < Init.point2.list.length;i++) {
+                var s2 = Init.point2.list[i];
                 if(s2['drag']) {
                     s2['x']+=dx;
                     s2['y']+=dy;
                 }
             }
         }
-        if(init.drag_cent_1) {
-            for(var i = 0; i < init.point1.list.length; i++) {
-                init.point1.list[i]['x'] += dx;
-                init.point1.list[i]['y'] += dy;
+        if(Init.drag_cent_1) {
+            for(var i = 0; i < Init.point1.list.length; i++) {
+                Init.point1.list[i]['x'] += dx;
+                Init.point1.list[i]['y'] += dy;
             }
         }
 
-        if(init.drag_cent_2) {
-            for(var i = 0; i < init.point2.list.length; i++) {
-                init.point2.list[i]['x'] += dx;
-                init.point2.list[i]['y'] += dy;
+        if(Init.drag_cent_2) {
+            for(var i = 0; i < Init.point2.list.length; i++) {
+                Init.point2.list[i]['x'] += dx;
+                Init.point2.list[i]['y'] += dy;
             }
         }
 
-        init.startX = init.mx;
-        init.startY = init.my;
+        Init.startX = Init.mx;
+        Init.startY = Init.my;
     };
 
     this.scale = function (factor, point) {
@@ -318,20 +271,20 @@ function ui(){
     };
 
     this.scaleDown = function()   {
-        if(init.polygon == 1) {
-            this.scale(.99, init.point1);
+        if(Init.polygon == 1) {
+            this.scale(.99, Init.point1);
         }
-        else if (init.polygon == 2) {
-            this.scale(.99, init.point2);
+        else if (Init.polygon == 2) {
+            this.scale(.99, Init.point2);
         }
     };
 
     this.scaleUp = function()   {
-        if(init.polygon == 1) {
-            this.scale(1.01, init.point1);
+        if(Init.polygon == 1) {
+            this.scale(1.01, Init.point1);
         }
-        else if (init.polygon == 2) {
-            this.scale(1.01, init.point2);
+        else if (Init.polygon == 2) {
+            this.scale(1.01, Init.point2);
         }
     };
 
@@ -348,26 +301,26 @@ function ui(){
         document.getElementById(button_id).disabled = true;
         document.getElementById(button_id).innerText = 'Loading';
         var img = new Image();
-        img.src = init.image_path + init.image_list[init.counter];
+        img.src = Init.image_path + Init.image_list[Init.counter];
         this.scrollToMiddle();
         img.onload = function(){
-            init.image_canvas.clear();
-            init.image_canvas.drawImage(img, 0, 0);
-            document.getElementById("FileName").innerHTML = init.image_list[count];
-            document.getElementById("ImageCount").innerHTML = init.counter+1;
+            Init.image_canvas.clear();
+            Init.image_canvas.drawImage(img, 0, 0);
+            document.getElementById("FileName").innerHTML = Init.image_list[count];
+            document.getElementById("ImageCount").innerHTML = Init.counter+1;
             document.getElementById(button_id).innerText = button_text;
             document.getElementById(button_id).disabled = false;
         };
     };
 
     this.Previous = function(){
-        if(init.counter == 0){return null;}
-        else init.counter = init.counter - 1;
+        if(Init.counter == 0){return null;}
+        else Init.counter = Init.counter - 1;
         this.loadImage('prev-btn', 'Previous')
     };
 
     this.Next = function() {
-        init.counter = init.counter + 1;
+        Init.counter = Init.counter + 1;
         this.loadImage('next-btn', 'Next')
     };
 
@@ -390,12 +343,56 @@ function ui(){
     };
 }
 
+function Init(){
+
+    Init.counter = 0;
+    Init.polygon = 1;
+    Init.image_path = getPath();
+    Init.image_list = ['drishtiGS_094.png', 'drishtiGS_026.png', 'drishtiGS_075.png', 'drishtiGS_081.png', 
+    'drishtiGS_084.png', 'drishtiGS_031.png', 'drishtiGS_098.png', 'drishtiGS_036.png', 'drishtiGS_051.png', 
+    'drishtiGS_045.png', 'drishtiGS_080.png', 'drishtiGS_047.png', 'drishtiGS_060.png', 'drishtiGS_035.png', 
+    'drishtiGS_008.png', 'drishtiGS_057.png', 'drishtiGS_017.png', 'drishtiGS_076.png', 'drishtiGS_024.png', 
+    'drishtiGS_012.png', 'drishtiGS_032.png', 'drishtiGS_037.png', 'drishtiGS_062.png', 'drishtiGS_068.png', 
+    'drishtiGS_042.png', 'drishtiGS_002.png', 'drishtiGS_101.png', 'drishtiGS_089.png', 'drishtiGS_022.png', 
+    'drishtiGS_061.png', 'drishtiGS_069.png', 'drishtiGS_046.png', 'drishtiGS_033.png', 'drishtiGS_090.png', 
+    'drishtiGS_049.png', 'drishtiGS_004.png', 'drishtiGS_092.png', 'drishtiGS_063.png', 'drishtiGS_016.png', 
+    'drishtiGS_041.png', 'drishtiGS_044.png', 'drishtiGS_058.png', 'drishtiGS_088.png', 'drishtiGS_064.png'];
+
+    Init.point1 = new Points();
+    Init.point1.init(18, 200, 300, 300);
+
+    Init.point2 = new Points();
+    Init.point2.init(14, 150, 500, 500);
+
+    Init.image_canvas = new Canvas();
+    Init.image_canvas.init('myCanvas0');
+
+    Init.point_canvas = new Canvas();
+    Init.point_canvas.init('myCanvas_1');
+
+    Init.image_canvas.drawImage();
+
+    this.user = new User();
+    this.user.getDetails();
+
+    this.dragok = false;
+    this.drag_cent_1 = false;
+    this.drag_cent_2 = false;    
+    var BB = Init.point_canvas.element.getBoundingClientRect();
+    this.offsetX = BB.left;
+    this.offsetY = BB.top;
+
+    this.startX;
+    this.startY;
+
+    return setInterval(Init.point_canvas.drawFullFigure(this.point1, this.point2, this.polygon), 10);
+}
+
 window.onload = function() {
-	init();
-    
-    this.point_canvas.element.onmousedown = myDown;
-    this.point_canvas.element.onmouseup = myUp;
-    this.point_canvas.element.onmousemove = myMove;
+	var i = Init();    
+    i.point_canvas.element.onmousedown = myDown;
+    i.point_canvas.element.onmouseup = myUp;
+    i.point_canvas.element.onmousemove = myMove;
 }
 
 

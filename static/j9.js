@@ -6,14 +6,30 @@ var canvas1 = document.getElementById('myCanvas0');
 var cxt0 = canvas1.getContext('2d');
 
 var image_path = getPath();
-var image_list = ['drishtiGS_094.png', 'drishtiGS_026.png', 'drishtiGS_075.png', 'drishtiGS_081.png', 'drishtiGS_084.png', 'drishtiGS_031.png', 'drishtiGS_098.png', 'drishtiGS_036.png', 'drishtiGS_051.png', 'drishtiGS_045.png', 'drishtiGS_080.png', 'drishtiGS_047.png', 'drishtiGS_060.png', 'drishtiGS_035.png', 'drishtiGS_008.png', 'drishtiGS_057.png', 'drishtiGS_017.png', 'drishtiGS_076.png', 'drishtiGS_024.png', 'drishtiGS_012.png', 'drishtiGS_032.png', 'drishtiGS_037.png', 'drishtiGS_062.png', 'drishtiGS_068.png', 'drishtiGS_042.png', 'drishtiGS_002.png', 'drishtiGS_101.png', 'drishtiGS_089.png', 'drishtiGS_022.png', 'drishtiGS_061.png', 'drishtiGS_069.png', 'drishtiGS_046.png', 'drishtiGS_033.png', 'drishtiGS_090.png', 'drishtiGS_049.png', 'drishtiGS_004.png', 'drishtiGS_092.png', 'drishtiGS_063.png', 'drishtiGS_016.png', 'drishtiGS_041.png', 'drishtiGS_044.png', 'drishtiGS_058.png', 'drishtiGS_088.png', 'drishtiGS_064.png'];
-;
+var image_list = 
+[
+    ['drishtiGS_094.png', 'drishtiGS_026.png', 'drishtiGS_075.png', 'drishtiGS_081.png', 'drishtiGS_084.png', 
+    'drishtiGS_031.png', 'drishtiGS_098.png', 'drishtiGS_036.png', 'drishtiGS_051.png', 'drishtiGS_045.png', 
+    'drishtiGS_080.png'], 
+
+    ['drishtiGS_047.png', 'drishtiGS_060.png', 'drishtiGS_035.png', 'drishtiGS_008.png', 'drishtiGS_057.png', 
+    'drishtiGS_017.png', 'drishtiGS_076.png', 'drishtiGS_024.png', 'drishtiGS_012.png', 'drishtiGS_032.png', 
+    'drishtiGS_037.png'], 
+
+    ,['drishtiGS_062.png', 'drishtiGS_068.png', 'drishtiGS_042.png', 'drishtiGS_002.png', 'drishtiGS_101.png', 
+    'drishtiGS_089.png', 'drishtiGS_022.png', 'drishtiGS_061.png', 'drishtiGS_069.png', 'drishtiGS_046.png', 
+    'drishtiGS_033.png']
+
+    ,['drishtiGS_090.png', 'drishtiGS_049.png', 'drishtiGS_004.png', 'drishtiGS_092.png', 'drishtiGS_063.png', 
+    'drishtiGS_016.png', 'drishtiGS_041.png', 'drishtiGS_044.png', 'drishtiGS_058.png', 'drishtiGS_088.png', 
+    'drishtiGS_064.png']
+];
 
 console.log(image_list);
-var first_img = document.createElement
-var first_img = document.createElement("img");
-first_img.src = image_path + image_list[count];
-cxt0.drawImage(first_img, 0, 0);
+//var first_img = document.createElement
+//var first_img = document.createElement("img");
+//first_img.src = image_path + image_list[setNum][count];
+//cxt0.drawImage(first_img, 0, 0);
 
 var point_list_1 = [];
 var point_list_2 = [];
@@ -32,29 +48,18 @@ var BB = canvas0.getBoundingClientRect();
 var offsetX = BB.left;
 var offsetY = BB.top;
 
+var setNum = 0; // by default
+var userDetails;
+
 function scrollToMiddle(){
     window.scrollTo(window.scrollMaxX/2, window.scrollMaxY/2);
     return;
 }
 
-var userDetails = [];
-function getDetails(){
-  if(document.getElementById("tnc-check").checked &&
-    !document.getElementById("email-input").validity.typeMismatch &&
-    !document.getElementById("email-input").validity.valueMissing &&
-    !document.getElementById("name-input").validity.valueMissing){
-    username = document.getElementById("name-input").value;
-    email = document.getElementById("email-input").value;
-    userDetails.push(username); userDetails.push(email);
-    console.log(userDetails);
-    document.getElementById("cover").remove();
-  }
-}
-
 function Save() {
     // TAKE THIS JSON AND STORE
     var list = [];
-    var json_obj = {"id": image_list[count], "user_info": userDetails, "list": list.concat(point_list_1, point_list_2)};
+    var json_obj = {"id": image_list[setNum][count], "user_info": userDetails, "list": list.concat(point_list_1, point_list_2)};
     document.getElementById('save-btn').disabled = true;
     document.getElementById('save-btn').innerText = "Saving...";
     send(json_obj);
@@ -64,7 +69,7 @@ function Save() {
     return;
 }
 
-function loadImage(button_id, button_text, image_list, image_path, count){
+function loadImage(button_id, button_text, image_list, image_path, count, setNum){
     /*
         Load new image in canvas.
 
@@ -74,30 +79,40 @@ function loadImage(button_id, button_text, image_list, image_path, count){
         image_path: Path to be prepended to each name of image which will link source with proper location.
         count: Count is the position of image in image_name list which is to be loaded in canvas.
     */
+    checkButtonValidity();
     document.getElementById(button_id).disabled = true;
     document.getElementById(button_id).innerText = 'Loading';
     var img = new Image();
-    img.src = image_path + image_list[count];
+    img.src = image_path + image_list[setNum][count];
     scrollToMiddle();
     img.onload = function(){
         cxt0.clearRect(0, 0, canvas0.width, canvas0.height);
         cxt0.drawImage(img, 0, 0);
-        document.getElementById("FileName").innerHTML = image_list[count];
+        document.getElementById("FileName").innerHTML = image_list[setNum][count];
         document.getElementById("ImageCount").innerHTML = count+1;
         document.getElementById(button_id).innerText = button_text;
-        document.getElementById(button_id).disabled = false;
+        document.getElementById(button_id).disabled = false;   
+        checkButtonValidity();
     };
+    
+}
+
+function checkButtonValidity(){
+    if(count <= 0){document.getElementById('prev-btn').disabled = true;}
+    else{document.getElementById('prev-btn').disabled = false;}
+    if(count >= image_list[setNum].length-1){
+        document.getElementById('next-btn').disabled = true; return null;}
+    else{document.getElementById('next-btn').disabled = false;}
 }
 
 function Previous(){
-	if(count == 0){return null;}
-	else count = count - 1;
-    loadImage('prev-btn', 'Previous', image_list, image_path, count)
+	count = count - 1;
+    loadImage('prev-btn', 'Previous', image_list, image_path, count, setNum);
 }
 
 function Next() {
-	count = count + 1;
-    loadImage('next-btn', 'Next', image_list, image_path, count)
+    count = count + 1;
+    loadImage('next-btn', 'Next', image_list, image_path, count, setNum);   
 }
 
 
@@ -338,11 +353,29 @@ function init() {
   return setInterval(draw, 10);
 }
 
+
+function getDetails(){
+    userDetails = [];
+  if(document.getElementById("tnc-check").checked &&
+    !document.getElementById("email-input").validity.typeMismatch &&
+    !document.getElementById("email-input").validity.valueMissing &&
+    !document.getElementById("name-input").validity.valueMissing){
+    username = document.getElementById("name-input").value;
+    email = document.getElementById("email-input").value;
+    userDetails.push(username); userDetails.push(email);
+    setNum = document.getElementById("set-num").value - 1;
+    console.log(userDetails);
+    console.log(setNum);
+    document.getElementById("cover").remove();
+            document.getElementById("totalImages").innerHTML = image_list[setNum].length;
+        loadImage('next-btn', 'Next', image_list, image_path, count, setNum);
+ 
+  }
+}
+
 window.onload = function() {
+
 	document.getElementById("cover").style.display = "block";
-    document.getElementById("FileName").innerHTML = image_list[count];
-    document.getElementById("ImageCount").innerHTML = count+1;
-    cxt0.drawImage(first_img, 0, 0);
 }
 
 init();
