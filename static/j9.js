@@ -6,24 +6,7 @@ var canvas1 = document.getElementById('myCanvas0');
 var cxt0 = canvas1.getContext('2d');
 
 var image_path = getPath();
-var image_list = 
-[
-    ['drishtiGS_094.png', 'drishtiGS_026.png', 'drishtiGS_075.png', 'drishtiGS_081.png', 'drishtiGS_084.png', 
-    'drishtiGS_031.png', 'drishtiGS_098.png', 'drishtiGS_036.png', 'drishtiGS_051.png', 'drishtiGS_045.png', 
-    'drishtiGS_080.png'], 
 
-    ['drishtiGS_047.png', 'drishtiGS_060.png', 'drishtiGS_035.png', 'drishtiGS_008.png', 'drishtiGS_057.png', 
-    'drishtiGS_017.png', 'drishtiGS_076.png', 'drishtiGS_024.png', 'drishtiGS_012.png', 'drishtiGS_032.png', 
-    'drishtiGS_037.png'], 
-
-    ,['drishtiGS_062.png', 'drishtiGS_068.png', 'drishtiGS_042.png', 'drishtiGS_002.png', 'drishtiGS_101.png', 
-    'drishtiGS_089.png', 'drishtiGS_022.png', 'drishtiGS_061.png', 'drishtiGS_069.png', 'drishtiGS_046.png', 
-    'drishtiGS_033.png']
-
-    ,['drishtiGS_090.png', 'drishtiGS_049.png', 'drishtiGS_004.png', 'drishtiGS_092.png', 'drishtiGS_063.png', 
-    'drishtiGS_016.png', 'drishtiGS_041.png', 'drishtiGS_044.png', 'drishtiGS_058.png', 'drishtiGS_088.png', 
-    'drishtiGS_064.png']
-];
 
 console.log(image_list);
 //var first_img = document.createElement
@@ -93,8 +76,8 @@ function loadImage(button_id, button_text, image_list, image_path, count, setNum
         document.getElementById(button_id).innerText = button_text;
         document.getElementById(button_id).disabled = false;   
         checkButtonValidity();
-        loadPointsFromDict();
     };
+    return loadPointsFromDict();
     
 }
 
@@ -117,7 +100,7 @@ function Next() {
 }
 
 
-function clear() {
+function clearCanv() {
  var canvas0 = document.getElementById('myCanvas_1');
  var cxt = canvas0.getContext('2d');
  cxt.clearRect(0, 0, canvas0.width, canvas0.height);
@@ -303,19 +286,13 @@ function myMove(e) {
  updatePointsDict();
 }
 
-
-function updatePointsDict(){
-    image_dict[image_list[setNum][count]]['point_list_1'] = JSON.stringify(point_list_1);
-    image_dict[image_list[setNum][count]]['point_list_2'] = JSON.stringify(point_list_2);
-}
-
 function initial_point_gen() {
  point_list_gen("point_list_1",18,200,300,300);
  point_list_gen("point_list_2",14,150,500,500);
 }
 
 function draw() {
-  clear();
+  clearCanv();
   var mid_x_1 = center(point_list_1)["mid_x"];
   var mid_y_1 = center(point_list_1)["mid_y"];
 
@@ -415,44 +392,17 @@ function send(json_obj) {
             console.log(xhr.responseText);
         }
     }
-    return
+    return;
 }
-
-image_dict = {
-        'drishtiGS_094.png':
-            {
-                'point_list_1' : '[{"x":1076,"y":818,"drag":false},{"x":1058,"y":893.4040286651338,"drag":false},{"x":1010.2088886237957,"y":939.5575219373079,"drag":false},{"x":957,"y":984.2050807568877,"drag":false},{"x":891.729635533386,"y":1007.9615506024415,"drag":false},{"x":822.270364466614,"y":1007.9615506024415,"drag":false},{"x":757,"y":984.2050807568878,"drag":false},{"x":703.7911113762043,"y":939.5575219373079,"drag":false},{"x":669.0614758428184,"y":879.4040286651338,"drag":false},{"x":657,"y":811,"drag":false},{"x":669.0614758428183,"y":742.5959713348662,"drag":false},{"x":703.7911113762043,"y":682.4424780626922,"drag":false},{"x":757,"y":637.7949192431123,"drag":false},{"x":822.270364466614,"y":614.0384493975585,"drag":false},{"x":891.729635533386,"y":614.0384493975583,"drag":false},{"x":957,"y":637.7949192431122,"drag":false},{"x":1010.2088886237957,"y":682.4424780626921,"drag":false},{"x":1060.9385241571817,"y":739.5959713348662,"drag":false},{"x":1076,"y":818,"drag":false}]',
-                'point_list_2' : '[{"x":1013,"y":804,"drag":false},{"x":998.1453301853628,"y":869.0825608676337,"drag":false},{"x":956.52347027881,"y":921.2747223702045,"drag":false},{"x":896.3781400934472,"y":950.2391868272736,"drag":false},{"x":829.6218599065528,"y":950.2391868272736,"drag":false},{"x":769.47652972119,"y":921.2747223702045,"drag":false},{"x":727.8546698146372,"y":869.0825608676337,"drag":false},{"x":713,"y":804,"drag":false},{"x":727.8546698146372,"y":738.9174391323663,"drag":false},{"x":769.47652972119,"y":686.7252776297955,"drag":false},{"x":829.6218599065528,"y":657.7608131727264,"drag":false},{"x":896.378140093447,"y":657.7608131727264,"drag":false},{"x":956.52347027881,"y":686.7252776297955,"drag":false},{"x":998.145330185363,"y":738.9174391323663,"drag":false},{"x":1013,"y":804,"drag":false}]'
-            },
-        'drishtiGS_026.png':
-            {
-                'point_list_1' : '[{"x":1076,"y":818,"drag":false},{"x":1058,"y":893.4040286651338,"drag":false},{"x":1010.2088886237957,"y":939.5575219373079,"drag":false},{"x":957,"y":984.2050807568877,"drag":false},{"x":891.729635533386,"y":1007.9615506024415,"drag":false},{"x":822.270364466614,"y":1007.9615506024415,"drag":false},{"x":757,"y":984.2050807568878,"drag":false},{"x":703.7911113762043,"y":939.5575219373079,"drag":false},{"x":669.0614758428184,"y":879.4040286651338,"drag":false},{"x":657,"y":811,"drag":false},{"x":669.0614758428183,"y":742.5959713348662,"drag":false},{"x":703.7911113762043,"y":682.4424780626922,"drag":false},{"x":757,"y":637.7949192431123,"drag":false},{"x":822.270364466614,"y":614.0384493975585,"drag":false},{"x":891.729635533386,"y":614.0384493975583,"drag":false},{"x":957,"y":637.7949192431122,"drag":false},{"x":1010.2088886237957,"y":682.4424780626921,"drag":false},{"x":1060.9385241571817,"y":739.5959713348662,"drag":false},{"x":1076,"y":818,"drag":false}]',
-                'point_list_2' : '[{"x":1013,"y":804,"drag":false},{"x":998.1453301853628,"y":869.0825608676337,"drag":false},{"x":956.52347027881,"y":921.2747223702045,"drag":false},{"x":896.3781400934472,"y":950.2391868272736,"drag":false},{"x":829.6218599065528,"y":950.2391868272736,"drag":false},{"x":769.47652972119,"y":921.2747223702045,"drag":false},{"x":727.8546698146372,"y":869.0825608676337,"drag":false},{"x":713,"y":804,"drag":false},{"x":727.8546698146372,"y":738.9174391323663,"drag":false},{"x":769.47652972119,"y":686.7252776297955,"drag":false},{"x":829.6218599065528,"y":657.7608131727264,"drag":false},{"x":896.378140093447,"y":657.7608131727264,"drag":false},{"x":956.52347027881,"y":686.7252776297955,"drag":false},{"x":998.145330185363,"y":738.9174391323663,"drag":false},{"x":1013,"y":804,"drag":false}]'
-            },
-        'drishtiGS_075.png':
-            {
-                'point_list_1' : '[{"x":1076,"y":818,"drag":false},{"x":1058,"y":893.4040286651338,"drag":false},{"x":1010.2088886237957,"y":939.5575219373079,"drag":false},{"x":957,"y":984.2050807568877,"drag":false},{"x":891.729635533386,"y":1007.9615506024415,"drag":false},{"x":822.270364466614,"y":1007.9615506024415,"drag":false},{"x":757,"y":984.2050807568878,"drag":false},{"x":703.7911113762043,"y":939.5575219373079,"drag":false},{"x":669.0614758428184,"y":879.4040286651338,"drag":false},{"x":657,"y":811,"drag":false},{"x":669.0614758428183,"y":742.5959713348662,"drag":false},{"x":703.7911113762043,"y":682.4424780626922,"drag":false},{"x":757,"y":637.7949192431123,"drag":false},{"x":822.270364466614,"y":614.0384493975585,"drag":false},{"x":891.729635533386,"y":614.0384493975583,"drag":false},{"x":957,"y":637.7949192431122,"drag":false},{"x":1010.2088886237957,"y":682.4424780626921,"drag":false},{"x":1060.9385241571817,"y":739.5959713348662,"drag":false},{"x":1076,"y":818,"drag":false}]',
-                'point_list_2' : '[{"x":1013,"y":804,"drag":false},{"x":998.1453301853628,"y":869.0825608676337,"drag":false},{"x":956.52347027881,"y":921.2747223702045,"drag":false},{"x":896.3781400934472,"y":950.2391868272736,"drag":false},{"x":829.6218599065528,"y":950.2391868272736,"drag":false},{"x":769.47652972119,"y":921.2747223702045,"drag":false},{"x":727.8546698146372,"y":869.0825608676337,"drag":false},{"x":713,"y":804,"drag":false},{"x":727.8546698146372,"y":738.9174391323663,"drag":false},{"x":769.47652972119,"y":686.7252776297955,"drag":false},{"x":829.6218599065528,"y":657.7608131727264,"drag":false},{"x":896.378140093447,"y":657.7608131727264,"drag":false},{"x":956.52347027881,"y":686.7252776297955,"drag":false},{"x":998.145330185363,"y":738.9174391323663,"drag":false},{"x":1013,"y":804,"drag":false}]'
-            },
-        
-        'drishtiGS_081.png' : 
-            {
-                'point_list_1' : '[{"x":1076,"y":818,"drag":false},{"x":1058,"y":893.4040286651338,"drag":false},{"x":1010.2088886237957,"y":939.5575219373079,"drag":false},{"x":957,"y":984.2050807568877,"drag":false},{"x":891.729635533386,"y":1007.9615506024415,"drag":false},{"x":822.270364466614,"y":1007.9615506024415,"drag":false},{"x":757,"y":984.2050807568878,"drag":false},{"x":703.7911113762043,"y":939.5575219373079,"drag":false},{"x":669.0614758428184,"y":879.4040286651338,"drag":false},{"x":657,"y":811,"drag":false},{"x":669.0614758428183,"y":742.5959713348662,"drag":false},{"x":703.7911113762043,"y":682.4424780626922,"drag":false},{"x":757,"y":637.7949192431123,"drag":false},{"x":822.270364466614,"y":614.0384493975585,"drag":false},{"x":891.729635533386,"y":614.0384493975583,"drag":false},{"x":957,"y":637.7949192431122,"drag":false},{"x":1010.2088886237957,"y":682.4424780626921,"drag":false},{"x":1060.9385241571817,"y":739.5959713348662,"drag":false},{"x":1076,"y":818,"drag":false}]',
-                'point_list_2' : '[{"x":1013,"y":804,"drag":false},{"x":998.1453301853628,"y":869.0825608676337,"drag":false},{"x":956.52347027881,"y":921.2747223702045,"drag":false},{"x":896.3781400934472,"y":950.2391868272736,"drag":false},{"x":829.6218599065528,"y":950.2391868272736,"drag":false},{"x":769.47652972119,"y":921.2747223702045,"drag":false},{"x":727.8546698146372,"y":869.0825608676337,"drag":false},{"x":713,"y":804,"drag":false},{"x":727.8546698146372,"y":738.9174391323663,"drag":false},{"x":769.47652972119,"y":686.7252776297955,"drag":false},{"x":829.6218599065528,"y":657.7608131727264,"drag":false},{"x":896.378140093447,"y":657.7608131727264,"drag":false},{"x":956.52347027881,"y":686.7252776297955,"drag":false},{"x":998.145330185363,"y":738.9174391323663,"drag":false},{"x":1013,"y":804,"drag":false}]'
-            }
-
-
-};
-
 
 function loadPointsFromDict(){
     clearInterval();
     polygon_1 = true;
     polygon_2 = true;
 
-    if(image_dict[image_list[setNum][count]]){
-    point_list_1 = JSON.parse(image_dict[image_list[setNum][count]]['point_list_1']);
-    point_list_2 = JSON.parse(image_dict[image_list[setNum][count]]['point_list_2']);
+    if(points_dict[image_list[setNum][count]]){
+    point_list_1 = points_dict[image_list[setNum][count]]['point_list_1'];
+    point_list_2 = points_dict[image_list[setNum][count]]['point_list_2'];
     }
 
     setInterval(draw(), 10);
@@ -460,3 +410,30 @@ function loadPointsFromDict(){
     polygon_1 = false;
     polygon_2 = false;
 }
+
+function updatePointsDict(){
+    points_dict[image_list[setNum][count]]['point_list_1'] = JSON.parse(JSON.stringify(point_list_1));
+    points_dict[image_list[setNum][count]]['point_list_2'] = JSON.parse(JSON.stringify(point_list_2));
+}
+
+// dicto = {}
+
+// function loadCenter(imagename){
+//     point_list_1 = [];
+//     point_list_2 = [];
+//     point_list_gen("point_list_1",18,200,center_dict[imagename]['x'],center_dict[imagename]['y']);
+//     point_list_gen("point_list_2",14,150,center_dict[imagename]['x'],center_dict[imagename]['y']);
+//     // draw();
+//     console.log('appending to ' + imagename);
+//     dicto[imagename] = {'point_list_1' : point_list_1, 
+//                         'point_list_2' : point_list_2};
+// }
+
+// function run(){
+//     for(var i=0; i<image_list.length; i++){
+//         for(var j=0; j<image_list[i].length; j++){
+//             loadCenter(image_list[i][j]);
+//             console.log(image_list[i][j]);
+//         }
+//     }
+// }

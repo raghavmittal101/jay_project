@@ -35,6 +35,7 @@
     		return "{{url_for('static', filename='images/set_a')}}/";
     	}
 	</script>
+    <script type=text/javascript src="{{url_for('static', filename='mydata.js')}}"></script>
     <!---<script type=text/javascript src="{{url_for('static', filename='image_list.js')}}"></script>-->
 </head>
 
@@ -55,7 +56,6 @@
 
         <canvas class="myCanvas0" id="myCanvas0" width="2500" height="2000" style="position: absolute; left: 0; top: 30px; z-index: 0;"> Your browser does not support the HTML5 canvas tag. </canvas>
     </div>
-
 	<script type=text/javascript src="{{url_for('static', filename='j9.js')}}"></script>
 
 <div id="cover" style="z-index: 5; width: 100%; height: 100vh; background: rgba(0, 0, 0, 0.6) none repeat scroll 0% 0%; position: fixed; display: block;">

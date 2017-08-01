@@ -389,9 +389,9 @@ function Init(){
     var ini = new Init();
     var user = new User(ini);
     var ui = new UI(ini, user);
-    ini.point_canvas.element.onmousedown = ui.myDown();
-    ini.point_canvas.element.onmouseup = ui.myUp();
-    ini.point_canvas.element.onmousemove = ui.myMove();
+    ini.point_canvas.element.onmousedown = ui.myDown;
+    ini.point_canvas.element.onmouseup = ui.myUp;
+    ini.point_canvas.element.onmousemove = ui.myMove;
     count = ini.counter;
     function Save(){ ui.save(); }
     function Next(){ count = ini.counter; ui.Next(); }
