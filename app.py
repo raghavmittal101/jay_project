@@ -36,20 +36,41 @@ def countImages(set_name):
 def parseJSON(json_obj):
 	"""
 	This parser function is specific to the present JSON output.
-	The output JSON object must look like this
+	The input JSON object must look like this
 	{
-		"id" : ' ',
-		"user_info" : [..., ..., ]
-		"list" : [{'x':..., 'y':..., }, {'x': ..., 'y':..., }, ...]
+		'imagename': {
+			"id" : ' ',
+			"user_info" : [..., ..., ],
+			"list" : [{'x':..., 'y':..., }, {'x': ..., 'y':..., }, ...]
+		},
+
+		'imagename': {
+			"id" : ' ',
+			"user_info" : [..., ..., ],
+			"list" : [{'x':..., 'y':..., }, {'x': ..., 'y':..., }, ...]
+		}
 	}
+
+	output: [['id', 'info1', 'info2', 'info3', 'x1', 'y1', 'x2', 'y2'.. ],
+			['id', 'info1', 'info2', 'info3', 'x1', 'y1', 'x2', 'y2'.. ],
+			['id', 'info1', 'info2', 'info3', 'x1', 'y1', 'x2', 'y2'.. ]]
 	"""
-	a = [json_obj['id']]
-	for j in json_obj['user_info']:
-		a.append(j)
-	for i in json_obj['list']:
-		a.append(i['x'])
-		a.append(i['y'])
-	return a
+	b = []
+	for i in json_obj:
+		a = [json_obj[i]['id']]
+		for j in json_obj[i]['user_info']:
+			a.append(j)
+		for j in json_obj[i]['list']:
+			a.append(j['x'])
+			a.append(j['y'])
+		b.append(a)
+	# a = [json_obj['id']]
+	# for j in json_obj['user_info']:
+	# 	a.append(j)
+	# for i in json_obj['list']:
+	# 	a.append(i['x'])
+	# 	a.append(i['y'])
+	return b
 
 @app.route('/')
 def index():

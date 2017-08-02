@@ -39,16 +39,24 @@ function scrollToMiddle(){
     return;
 }
 
+var data_dict= {};
+function Update() {
+    // TAKE THIS JSON AND STORE
+    list = [];
+    data_dict[image_list[setNum][count]] = {"id": image_list[setNum][count], "user_info": userDetails, "list": list.concat(point_list_1, point_list_2)};
+    return;
+}
+
 function Save() {
     // TAKE THIS JSON AND STORE
-    var list = [];
-    var json_obj = {"id": image_list[setNum][count], "user_info": userDetails, "list": list.concat(point_list_1, point_list_2)};
+    if(!data_dict[0]){return alert('No work to save!');}
+    // var json_obj = {"id": image_list[setNum][count], "user_info": userDetails, "list": list.concat(point_list_1, point_list_2)};
     document.getElementById('save-btn').disabled = true;
     document.getElementById('save-btn').innerText = "Saving...";
-    send(json_obj);
-    console.log(JSON.stringify(json_obj));
-    document.getElementById('save-btn').disabled = false;
-    document.getElementById('save-btn').innerText = "Save";
+    send(data_dict);
+    console.log(JSON.stringify(data_dict));
+    // document.getElementById('save-btn').disabled = false;
+    document.getElementById('save-btn').innerText = "Done";
     return;
 }
 
@@ -119,6 +127,8 @@ function scale(factor, pt_list) {
   pt_list[i]['x'] = pt_list[i]['x'] - x_dif;
   pt_list[i]['y'] = pt_list[i]['y'] - y_dif;
  }
+
+ updatePointsDict();
 }
 
 function ScaleDown()   {
@@ -283,7 +293,7 @@ function myMove(e) {
  startX = mx;
  startY = my;
  
- updatePointsDict();
+//  updatePointsDict();
 }
 
 function initial_point_gen() {
@@ -414,8 +424,23 @@ function loadPointsFromDict(){
 function updatePointsDict(){
     points_dict[image_list[setNum][count]]['point_list_1'] = JSON.parse(JSON.stringify(point_list_1));
     points_dict[image_list[setNum][count]]['point_list_2'] = JSON.parse(JSON.stringify(point_list_2));
+    activateUpdateButton();
+    
 }
 
+function activateUpdateButton(){
+    var btn = document.getElementById('update-btn');
+    btn.disabled = false;
+    // btn.click(function(){
+    //     deactivateUpdateButton();
+    // });
+}
+
+function deactivateUpdateButton(){
+    document.getElementById('update-btn').disabled = true;
+}
+
+function update_btn(){Update();deactivateUpdateButton();}
 // dicto = {}
 
 // function loadCenter(imagename){
