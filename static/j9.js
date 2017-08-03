@@ -41,15 +41,16 @@ function scrollToMiddle(){
 
 var data_dict= {};
 function Update() {
-    // TAKE THIS JSON AND STORE
+    // function to update data_dict
     list = [];
     data_dict[image_list[setNum][count]] = {"id": image_list[setNum][count], "user_info": userDetails, "list": list.concat(point_list_1, point_list_2)};
     return;
 }
 
 function Save() {
-    // TAKE THIS JSON AND STORE
-    if(!data_dict[0]){return alert('No work to save!');}
+    /*
+        function to save data_dict to google sheets.
+    */
     // var json_obj = {"id": image_list[setNum][count], "user_info": userDetails, "list": list.concat(point_list_1, point_list_2)};
     document.getElementById('save-btn').disabled = true;
     document.getElementById('save-btn').innerText = "Saving...";
@@ -57,7 +58,7 @@ function Save() {
     console.log(JSON.stringify(data_dict));
     // document.getElementById('save-btn').disabled = false;
     document.getElementById('save-btn').innerText = "Done";
-    return;
+    return true;
 }
 
 function loadImage(button_id, button_text, image_list, image_path, count, setNum){
@@ -90,11 +91,22 @@ function loadImage(button_id, button_text, image_list, image_path, count, setNum
 }
 
 function checkButtonValidity(){
+    /*
+    function to activate and deactivate next and previous buttons
+    */ 
     if(count <= 0){document.getElementById('prev-btn').disabled = true;}
     else{document.getElementById('prev-btn').disabled = false;}
-    if(count >= image_list[setNum].length-1){
-        document.getElementById('next-btn').disabled = true; return null;}
-    else{document.getElementById('next-btn').disabled = false;}
+    // if(count >= image_list[setNum].length-1){
+    if(count+1 >= image_list[setNum].length){
+        document.getElementById('next-btn').disabled = true;
+        activateSubmitButton();
+    }
+    else {
+        document.getElementById('next-btn').disabled = false;
+        removeSubmitButton();
+    }
+        // activateSubmitButton;
+        // return null;    
 }
 
 function Previous(){
@@ -126,6 +138,9 @@ function scale(factor, pt_list) {
  for(var i = 0; i < pt_list.length; i++) {
   pt_list[i]['x'] = pt_list[i]['x'] - x_dif;
   pt_list[i]['y'] = pt_list[i]['y'] - y_dif;
+
+  //update data_dict
+  Update();
  }
 
  updatePointsDict();
@@ -424,29 +439,57 @@ function loadPointsFromDict(){
 function updatePointsDict(){
     points_dict[image_list[setNum][count]]['point_list_1'] = JSON.parse(JSON.stringify(point_list_1));
     points_dict[image_list[setNum][count]]['point_list_2'] = JSON.parse(JSON.stringify(point_list_2));
-    activateUpdateButton();
+    Update();
+    // activateUpdateButton();
     
 }
 
-function activateUpdateButton(){
-    var btn = document.getElementById('update-btn');
-    btn.disabled = false;
-    // btn.click(function(){
-    //     deactivateUpdateButton();
-    // });
+// function activateUpdateButton(){
+//     var btn = document.getElementById('update-btn');
+//     btn.disabled = false;
+//     // btn.click(function(){
+//     //     deactivateUpdateButton();
+//     // });
+// }
+
+// function deactivateUpdateButton(){
+//     document.getElementById('update-btn').disabled = true;
+// }
+
+// function update_btn(){Update();deactivateUpdateButton();}
+
+function askToSubmit(){
+    if(Object.keys(data_dict).length <=0){alert('No work to save!');}
+    else{ 
+        if(confirm('Submit?')){
+            Save(); 
+            window.location.reload();
+        }
+    }
 }
 
-function deactivateUpdateButton(){
-    document.getElementById('update-btn').disabled = true;
+function activateSubmitButton(){
+    // var buttton = document.getElementById('next-btn');
+    var bt = document.getElementById('save-btn');
+    // bt.innerText = 'Submit'
+    bt.disabled = false;
+    bt.hidden = false;
+    // document.getElementById('next-btn').onclick = null;
+    // document.getElementById('next-btn').addEventListener('click', askToSubmit());
 }
-
-function update_btn(){Update();deactivateUpdateButton();}
+function removeSubmitButton(){
+    {
+        var bt = document.getElementById('save-btn');
+        bt.disabled = true;
+        bt.hidden = true;
+    }
+}
 // dicto = {}
 
 // function loadCenter(imagename){
 //     point_list_1 = [];
 //     point_list_2 = [];
-//     point_list_gen("point_list_1",18,200,center_dict[imagename]['x'],center_dict[imagename]['y']);
+//     point_list_gen("point_list_1",18,200,center_dict[imagename]['x']+5,center_dict[imagename]['y']+5);
 //     point_list_gen("point_list_2",14,150,center_dict[imagename]['x'],center_dict[imagename]['y']);
 //     // draw();
 //     console.log('appending to ' + imagename);
