@@ -34,8 +34,8 @@ var offsetY = BB.top;
 var setNum = 0; // by default
 var userDetails;
 
-function scrollToMiddle(){
-    window.scrollTo(window.scrollMaxX/2, window.scrollMaxY/2);
+function scrollToMiddle(horizontal, vertical){
+    window.scrollTo(horizontal-600, vertical-300);
     return;
 }
 
@@ -76,7 +76,7 @@ function loadImage(button_id, button_text, image_list, image_path, count, setNum
     document.getElementById(button_id).innerText = 'Loading';
     var img = new Image();
     img.src = image_path + image_list[setNum][count];
-    scrollToMiddle();
+    scrollToMiddle(center_dict[image_list[setNum][count]].x, center_dict[image_list[setNum][count]].y);
     img.onload = function(){
         cxt0.clearRect(0, 0, canvas0.width, canvas0.height);
         cxt0.drawImage(img, 0, 0);
@@ -85,6 +85,8 @@ function loadImage(button_id, button_text, image_list, image_path, count, setNum
         document.getElementById(button_id).innerText = button_text;
         document.getElementById(button_id).disabled = false;   
         checkButtonValidity();
+        var next_img = new Image();
+        next_img.src = image_path + image_list[setNum][count+1];
     };
     return loadPointsFromDict();
     
@@ -206,7 +208,6 @@ function draw_points(pt_list, style) {
 }
 
 function myDown(e) {
-
  var mx = parseInt(e.pageX-offsetX);
  var my = parseInt(e.pageY-offsetY);
 
@@ -374,8 +375,7 @@ function init() {
 
 function getDetails(){
     userDetails = [];
-  if(document.getElementById("tnc-check").checked &&
-    !document.getElementById("email-input").validity.typeMismatch &&
+  if(!document.getElementById("email-input").validity.typeMismatch &&
     !document.getElementById("email-input").validity.valueMissing &&
     !document.getElementById("name-input").validity.valueMissing){
     username = document.getElementById("name-input").value;
@@ -481,7 +481,7 @@ function removeSubmitButton(){
     {
         var bt = document.getElementById('save-btn');
         bt.disabled = true;
-        bt.hidden = true;
+        bt.hidden = false;
     }
 }
 // dicto = {}

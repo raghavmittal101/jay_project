@@ -45,7 +45,7 @@
         <button onclick="Previous()" id="prev-btn"> Previous </button>
         <button onclick="ScaleUp()"> + </button>
         <button onclick="ScaleDown()"> - </button>
-        <button onclick="askToSubmit()" id="save-btn" disabled hidden> Submit</button>
+        <button onclick="askToSubmit()" id="save-btn" disabled> Submit</button>
         <b id="FileName"></b>
         <span style="float:right;"><b id="ImageCount"></b>/<b id="totalImages"></b></span>
         <!-- <div class="loader" id="loader" style="display: none"></div> -->
@@ -59,7 +59,7 @@
 	<script type=text/javascript src="{{url_for('static', filename='j9.js')}}"></script>
 
 <div id="cover" style="z-index: 5; width: 100%; height: 100vh; background: rgba(0, 0, 0, 0.6) none repeat scroll 0% 0%; position: fixed; display: block;">
-    <div id="cover-form" style="background: white;position: absolute;height: 26%;width: 36%;top: 50%;left: 50%;margin-top: -13%;margin-left: -18%;padding: 20px;color:#080707;border-radius: 10px;">
+    <div id="cover-form" style="background: white;position: absolute;height: 26%;width: 25%;top: 50%;left: 50%;margin-top: -13%;margin-left: -18%;padding: 20px;color:#080707;border-radius: 10px;">
       <input id="name-input" placeholder="Name(required)" required="" type="name"><br>
       <input id="email-input" placeholder="Email(required)" required="" type="email"><br>
       <select id="set-num">
@@ -68,7 +68,7 @@
         <option value=3>C</option>
         <option value=4>D</option>
       </select> 
-      Do you accept Terms and Conditions? <input id="tnc-check" required="" type="checkbox">(required)<br>
+      <br>
       <input id="submit-button" value="continue" onclick="getDetails()" style="margin-top: 5%;" type="submit">
     </div>
   </div>
