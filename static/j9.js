@@ -73,6 +73,11 @@ function loadImage(button_id, button_text, image_list, image_path, count, setNum
     */
     checkButtonValidity();
     document.getElementById(button_id).disabled = true;
+
+    document.getElementById('next-btn').innerText = 'Next';
+    document.getElementById('next-btn').disabled = true;
+    document.getElementById('prev-btn').innerText = 'Previous';
+    document.getElementById('prev-btn').disabled = true;
    // document.getElementById(button_id).innerText = 'Loading';
     document.getElementById('loader').style.display = 'inline-block';
     var img = new Image();
@@ -83,12 +88,20 @@ function loadImage(button_id, button_text, image_list, image_path, count, setNum
         cxt0.drawImage(img, 0, 0);
         document.getElementById("FileName").innerHTML = image_list[setNum][count];
         document.getElementById("ImageCount").innerHTML = count+1;
+        
         document.getElementById(button_id).innerText = button_text;
         document.getElementById(button_id).disabled = false;
+        
+        document.getElementById('next-btn').innerText = 'Next';
+        document.getElementById('next-btn').disabled = false;
+        document.getElementById('prev-btn').innerText = 'Previous';
+        document.getElementById('prev-btn').disabled = false;
         document.getElementById('loader').style.display = 'none';
         checkButtonValidity();
         var next_img = new Image();
         next_img.src = image_path + image_list[setNum][count+1];
+        var prev_img = new Image();
+        prev_img.src = image_path + image_list[setNum][count-1];
     };
     return loadPointsFromDict();
     
@@ -468,6 +481,7 @@ function askToSubmit(){
             window.location.reload();
         }
     }
+    return;
 }
 
 function activateSubmitButton(){
