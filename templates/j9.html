@@ -8,13 +8,13 @@
             padding: 0px;
         }
 
-/*.loader {
+.loader {
 	border: 5px solid rgba(0, 0, 0, 0);
 	border-radius: 50%;
-	border-top: 5px solid white;
-	border-bottom: 5px solid white;
-	width: 28px;
-	height: 28px;
+	border-top: 3px solid white;
+	border-bottom: 3px solid white;
+	width: 13px;
+	height: 13px;
 	-webkit-animation: spin 2s linear infinite;
 	animation: spin 1s linear infinite;
 	display: none;
@@ -28,7 +28,7 @@
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
-}*/
+}
 </style>
     <script type=text/javascript>
     	function getPath(){
@@ -48,7 +48,7 @@
         <button onclick="askToSubmit()" id="save-btn" disabled> Submit</button>
         <b id="FileName"></b>
         <span style="float:right;"><b id="ImageCount"></b>/<b id="totalImages"></b></span>
-        <!-- <div class="loader" id="loader" style="display: none"></div> -->
+        <div class="loader" id="loader" style="display:none"></div> 
 
     </div>
     <div id = "main">
@@ -66,7 +66,7 @@
         <option value=1>A</option>
         <option value=2>B</option>
         <option value=3>C</option>
-        <option value=4>D</option>
+        <option value=4>Demo</option>
       </select> 
       <br>
       <input id="submit-button" value="continue" onclick="getDetails()" style="margin-top: 5%;" type="submit">

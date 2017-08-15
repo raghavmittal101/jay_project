@@ -73,7 +73,8 @@ function loadImage(button_id, button_text, image_list, image_path, count, setNum
     */
     checkButtonValidity();
     document.getElementById(button_id).disabled = true;
-    document.getElementById(button_id).innerText = 'Loading';
+   // document.getElementById(button_id).innerText = 'Loading';
+    document.getElementById('loader').style.display = 'inline-block';
     var img = new Image();
     img.src = image_path + image_list[setNum][count];
     scrollToMiddle(center_dict[image_list[setNum][count]].x, center_dict[image_list[setNum][count]].y);
@@ -83,7 +84,8 @@ function loadImage(button_id, button_text, image_list, image_path, count, setNum
         document.getElementById("FileName").innerHTML = image_list[setNum][count];
         document.getElementById("ImageCount").innerHTML = count+1;
         document.getElementById(button_id).innerText = button_text;
-        document.getElementById(button_id).disabled = false;   
+        document.getElementById(button_id).disabled = false;
+        document.getElementById('loader').style.display = 'none';
         checkButtonValidity();
         var next_img = new Image();
         next_img.src = image_path + image_list[setNum][count+1];
