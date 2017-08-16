@@ -478,7 +478,7 @@ function askToSubmit(){
     else{ 
         if(confirm('Submit?')){
             Save(); 
-            window.location.reload();
+            document.getElementById("comp_cover").style.display = "block";
         }
     }
     return;
