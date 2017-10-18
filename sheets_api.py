@@ -31,7 +31,7 @@ def read():
 
 def write(valuesList):
 	service = connect()
-	values = [valuesList]
+	values = valuesList
 	body = {'values': values}
 	result = service.spreadsheets().values().append(
 		spreadsheetId=SHEET_ID, range=SELECTION_RANGE,

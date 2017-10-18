@@ -7,14 +7,14 @@
             margin: 0px;
             padding: 0px;
         }
-    
+
 .loader {
 	border: 5px solid rgba(0, 0, 0, 0);
 	border-radius: 50%;
-	border-top: 5px solid white;
-	border-bottom: 5px solid white;
-	width: 28px;
-	height: 28px;
+	border-top: 3px solid white;
+	border-bottom: 3px solid white;
+	width: 13px;
+	height: 13px;
 	-webkit-animation: spin 2s linear infinite;
 	animation: spin 1s linear infinite;
 	display: none;
@@ -32,32 +32,51 @@
 </style>
     <script type=text/javascript>
     	function getPath(){
-    		return "{{url_for('static', filename='all_images')}}/";
+    		return "{{url_for('static', filename='images/set_a')}}/";
     	}
 	</script>
-    <script type=text/javascript src="{{url_for('static', filename='image_list.js')}}"></script>
+    <script type=text/javascript src="{{url_for('static', filename='mydata.js')}}"></script>
+    <!---<script type=text/javascript src="{{url_for('static', filename='image_list.js')}}"></script>-->
 </head>
 
 <body>
-    <div id="button_container" style="position: fixed;z-index: 100;background: rgba(0, 0, 0, 0.5);color:white;">
+    <div id="button_container" style="position: fixed;z-index: 3;background: rgba(0, 0, 0, 0.5);color:white; width:100%;">
         <button onclick="Next()" id="next-btn"> Next </button>
         <button onclick="Previous()" id="prev-btn"> Previous </button>
         <button onclick="ScaleUp()"> + </button>
         <button onclick="ScaleDown()"> - </button>
-        <button onclick="Hide()"> Hide </button>
-        <button onclick="Show()"> Show </button>
-        <button onclick="Save()" id="save-btn"> Save </button>
-        <b id="FileName">drishtiGS_001</b>
-        <div class="loader" id="loader" style="display: none"></div>
+        <button onclick="askToSubmit()" id="save-btn" disabled> Submit</button>
+        <b id="FileName"></b>
+        <span style="float:right;"><b id="ImageCount"></b>/<b id="totalImages"></b></span>
+        <div class="loader" id="loader" style="display:none"></div> 
+
     </div>
-    
     <div id = "main">
-        <canvas class = "myCanvas_1" id="myCanvas_1" width="2500" height="2000" style="position: absolute; left: 0; top: 30px; z-index: 0;"> Your browser does not support the HTML5 canvas tag. </canvas>
+        <canvas class = "myCanvas_1" id="myCanvas_1" width="2500" height="2000" style="position: absolute; left: 0; top: 30px; z-index: 1;"> Your browser does not support the HTML5 canvas tag. </canvas>
 
-        <canvas class="myCanvas0" id="myCanvas0" width="2500" height="2000" style="position: absolute; left: 0; top: 30px; z-index: 1;"> Your browser does not support the HTML5 canvas tag. </canvas>
+        <canvas class="myCanvas0" id="myCanvas0" width="2500" height="2000" style="position: absolute; left: 0; top: 30px; z-index: 0;"> Your browser does not support the HTML5 canvas tag. </canvas>
     </div>
-    
 	<script type=text/javascript src="{{url_for('static', filename='j9.js')}}"></script>
-</body>
 
+<div id="cover" style="z-index: 5; width: 100%; height: 100vh; background: rgba(0, 0, 0, 0.6) none repeat scroll 0% 0%; position: fixed; display: block;">
+    <div id="cover-form" style="background: white;position: absolute;height: 26%;width: 25%;top: 50%;left: 50%;margin-top: -13%;margin-left: -18%;padding: 20px;color:#080707;border-radius: 10px;">
+      <input id="name-input" placeholder="Name(required)" required="" type="name"><br>
+      <input id="email-input" placeholder="Email(required)" required="" type="email"><br>
+      <select id="set-num">
+        <option value=1>A</option>
+        <option value=2>B</option>
+        <option value=3>C</option>
+        <option value=4>D</option>
+        <option value=5>Demo</option>
+      </select> 
+      <br>
+      <input id="submit-button" value="continue" onclick="getDetails()" style="margin-top: 5%;" type="submit">
+    </div>
+  </div>
+  <div id="comp_cover" style="z-index: 5; width: 100%; height: 100vh; background: rgba(0, 0, 0, 0.6) none repeat scroll 0% 0%; position: fixed; display: none;">
+      <div id="comp_cover" style="background: white;position: absolute;height: 26%;width: 25%;top: 50%;left: 50%;margin-top: -13%;margin-left: -18%;padding: 20px;color:#080707;border-radius: 10px;">
+      <span style="font-family: sans inherit;font-size: 1.1rem;"><b>Thanks a lot!</b> Your response has been recorded. Please close the current tab and proceed with other sets by opening the URL <a href=//drishti.herokuapp.com target="_blank">drishti.herokuapp.com</a> in new tab.</span>
+      </div>
+  </div>
+</body>
 </html>
